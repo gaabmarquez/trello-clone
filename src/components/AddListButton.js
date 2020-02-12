@@ -1,9 +1,19 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import addList from '../redux/actions/listActions';
+
 // import TextareaAutosize from 'react-textarea-autosize';
 
 export default function AddListButton() {
   const [formOpen, setFormOpen] = useState(false);
   const [text, setText] = useState('');
+  const dispatch = useDispatch();
+
+  const createList = () => {
+    console.log(text);
+    dispatch(addList(text));
+    setText('');
+  };
 
   const handleInputChange = ev => {
     setText(ev.target.value);
@@ -11,6 +21,7 @@ export default function AddListButton() {
 
   const toggleForm = () => {
     setFormOpen(prev => !prev);
+    setText('');
   };
   const formRender = () => (
     <div style={styles.form}>
@@ -23,7 +34,11 @@ export default function AddListButton() {
         style={styles.textArea}
       />
       <div style={styles.actionContainer}>
-        <button className='btn' style={styles.actionContainer.addCardBtn}>
+        <button
+          className='btn'
+          style={styles.actionContainer.addCardBtn}
+          onMouseDown={createList}
+        >
           Add List
         </button>
         <span onClick={toggleForm}>
@@ -94,6 +109,6 @@ const styles = {
     padding: '8px 12px',
     resize: 'none',
     width: '100%',
-    border: 'none',
+    border: 'none'
   }
 };

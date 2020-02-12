@@ -1,9 +1,18 @@
 import React, { useState } from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
+import { useDispatch } from 'react-redux';
+import addCard from '../redux/actions/cardActions';
 
-export default function AddCardButton() {
+export default function AddCardButton({ listId }) {
   const [formOpen, setFormOpen] = useState(false);
   const [text, setText] = useState('');
+  const dispatch = useDispatch();
+
+  const createCard = () => {
+    console.log(text);
+    setText('');
+    dispatch(addCard(listId, text));
+  };
 
   const handleInputChange = ev => {
     setText(ev.target.value);
@@ -11,6 +20,8 @@ export default function AddCardButton() {
 
   const toggleForm = () => {
     setFormOpen(prev => !prev);
+    setText('');
+
   };
   const formRender = () => (
     <>
@@ -24,7 +35,11 @@ export default function AddCardButton() {
         style={styles.textArea}
       />
       <div style={styles.actionContainer}>
-        <button className='btn' style={styles.actionContainer.addCardBtn}>
+        <button
+          className='btn'
+          style={styles.actionContainer.addCardBtn}
+          onMouseDown={createCard}
+        >
           Add Card
         </button>
         <span onClick={toggleForm}>
