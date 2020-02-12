@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import addList from '../redux/actions/listActions';
+import { addList } from '../redux/actions/listActions';
 
 // import TextareaAutosize from 'react-textarea-autosize';
 

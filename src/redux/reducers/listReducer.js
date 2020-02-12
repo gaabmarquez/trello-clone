@@ -4,38 +4,60 @@ import initialState from './initialState';
 let listID = 2;
 let cardId = 4;
 
-
 const listReducer = (state = initialState, action) => {
   switch (action.type) {
     case CONSTANTS.ADD_LIST:
-      console.log('REducer', action)
+      console.log('REducer', action);
       const newList = {
         title: action.payload,
         cards: [],
-        id: ++listID
+        id: `list-${++listID}`
       };
       return [...state, newList];
 
-      case CONSTANTS.ADD_CARD:
-        console.log('CARD REDUCER ', action);
-        const newCard = {
-          id: ++cardId,
-          text: action.payload.text,
-        };
-        console.log('state', state);
-        const newState = state.map(list => {
-          if (list.id === action.payload.listId) {
-            return {
-              ...list,
-              cards: [...list.cards, newCard]
-            };
-          } else {
-            return list;
-          }
-        });
-        console.log('NEW STATE', newState);
-        return newState;
+    case CONSTANTS.ADD_CARD: {
+      console.log('CARD REDUCER ', action);
+      const newCard = {
+        id: ++cardId,
+        text: action.payload.text
+      };
+      console.log('state', state);
+      const newState = state.map(list => {
+        if (list.id === action.payload.listId) {
+          return {
+            ...list,
+            cards: [...list.cards, newCard]
+          };
+        } else {
+          return list;
+        }
+      });
+      // console.log('NEW STATE', newState);
+      return newState;
+    }
+    case CONSTANTS.DRAGGED:
+      const {
+        droppableIdStart,
+        droppableIdEnd,
+        droppableIndexStart,
+        droppableIndexEnd
+      } = action.payload;
 
+      //same container
+      if (droppableIdStart === droppableIdEnd) {
+        const list = state.find(list => droppableIdStart === list.id);
+        const card = list.cards.splice(droppableIndexStart, 1);
+        list.cards.splice(droppableIndexEnd, 0, ...card);
+      } else {
+        const startList = state.find(list => droppableIdStart === list.id);
+        const endList = state.find(list => droppableIdEnd === list.id);
+        
+        const card = startList.cards.splice(droppableIndexStart, 1);
+        endList.cards.splice(droppableIndexEnd, 0, ...card);
+      }
+
+      const newState = [...state];
+      return newState;
     default:
       return state;
   }

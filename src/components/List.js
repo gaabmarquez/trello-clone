@@ -2,18 +2,27 @@ import React from 'react';
 import Card from './Card';
 import AddCardButton from './AddCardButton';
 
+import { Droppable } from 'react-beautiful-dnd';
+
 const List = ({ id, title, cards }) => {
-  // const cards = useSelector(state => state.lists);
-
   return (
-    <div style={styles.container}>
-      <h2 style={styles.title}>{title}</h2>
-      {cards.map(card => (
-        <Card key={card.id} text={card.text} />
-      ))}
-
-      <AddCardButton  listId={id} />
-    </div>
+    
+    <Droppable droppableId={String(id)}>
+      {provided => (
+        <div
+          style={styles.container}
+          ref={provided.innerRef}
+          {...provided.droppableProps}
+        >
+          <h2 style={styles.title}>{title}</h2>
+          {cards.map((card, index) => (
+            <Card key={card.id} index={index} text={card.text} id={card.id} />
+          ))}
+          {provided.placeholder}
+          <AddCardButton listId={id} />
+        </div>
+      )}
+    </Droppable>
   );
 };
 
@@ -23,7 +32,10 @@ const styles = {
     marginRight: '1em',
     boxSizing: 'border-box',
     borderRadius: '3px',
-    minWidth: '272px'
+    minWidth: '272px',
+    maxWidth: '272px'
+
+
   },
   title: {
     padding: '10px',
