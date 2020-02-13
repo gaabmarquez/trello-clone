@@ -1,28 +1,49 @@
 import React from 'react';
 import Card from './Card';
 import AddCardButton from './AddCardButton';
+import { Droppable, Draggable } from 'react-beautiful-dnd';
+import styled from 'styled-components';
+const List = ({ id, title, cards, index }) => {
+  const ListContainer = styled.div`
+    background-color: #ebecf0;
+    margin-right: 1em;
+    box-sizing: border-box;
+    border-radius: 3px;
+    min-width: 272px;
+    max-width: 272px;
+  `;
 
-import { Droppable } from 'react-beautiful-dnd';
-
-const List = ({ id, title, cards }) => {
   return (
-    
-    <Droppable droppableId={String(id)}>
+    <Draggable draggableId={String(id)} index={index}>
       {provided => (
-        <div
-          style={styles.container}
+        <ListContainer
           ref={provided.innerRef}
-          {...provided.droppableProps}
+          {...provided.draggableProps}
+          {...provided.dragHandleProps}
         >
-          <h2 style={styles.title}>{title}</h2>
-          {cards.map((card, index) => (
-            <Card key={card.id} index={index} text={card.text} id={card.id} />
-          ))}
-          {provided.placeholder}
-          <AddCardButton listId={id} />
-        </div>
+          <Droppable droppableId={String(id)}>
+            {provided => (
+              <div
+                ref={provided.innerRef}
+                {...provided.droppableProps}
+              >
+                <h2 style={styles.title}>{title}</h2>
+                {cards.map((card, index) => (
+                  <Card
+                    key={card.id}
+                    index={index}
+                    text={card.text}
+                    id={card.id}
+                  />
+                ))}
+                {provided.placeholder}
+                <AddCardButton listId={id} />
+              </div>
+            )}
+          </Droppable>
+        </ListContainer>
       )}
-    </Droppable>
+    </Draggable>
   );
 };
 
@@ -34,8 +55,6 @@ const styles = {
     borderRadius: '3px',
     minWidth: '272px',
     maxWidth: '272px'
-
-
   },
   title: {
     padding: '10px',
