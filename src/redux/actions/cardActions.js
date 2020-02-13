@@ -1,10 +1,28 @@
 import { CONSTANTS } from '.';
+import { uuid } from 'uuidv4';
 
-const addCard = (listId, text) => {
+
+
+
+export const addCard = (listID, text) => {
+  const id = uuid();
+
   return {
     type: CONSTANTS.ADD_CARD,
-    payload: { text, listId }
+    payload: { text, listID, id }
   };
 };
 
-export default addCard;
+export const editCard = (id, listID, newText) => {
+  return {
+    type: CONSTANTS.EDIT_CARD,
+    payload: { id, listID, newText }
+  };
+};
+
+export const deleteCard = (id, listID) => {
+  return {
+    type: CONSTANTS.DELETE_CARD,
+    payload: { id, listID }
+  };
+};

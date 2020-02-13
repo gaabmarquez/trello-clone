@@ -22,10 +22,11 @@ const List = ({ id, title, cards, index }) => {
           {...provided.draggableProps}
           {...provided.dragHandleProps}
         >
+          <h2 style={styles.title}>{title}</h2>
+
           <Droppable droppableId={String(id)}>
             {provided => (
               <div ref={provided.innerRef} {...provided.droppableProps}>
-                <h2 style={styles.title}>{title}</h2>
                 {cards.map((card, index) => (
                   <Card
                     key={card.id}

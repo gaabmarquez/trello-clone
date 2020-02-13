@@ -1,34 +1,37 @@
 import { CONSTANTS } from '../actions';
-import initialState from './initialState';
 
-let listID = 2;
-let cardId = 4;
+const initialState = [{ id: 'list-0', cards: ['card-0'], title: 'To Do' },
+{ id: 'list-1', cards: ['card-1'], title: 'Doing' },
+{ id: 'list-2', cards: ['card-2'], title: 'Done' }];
 
 const listReducer = (state = initialState, action) => {
   switch (action.type) {
-    case CONSTANTS.ADD_LIST:
+    case CONSTANTS.ADD_LIST: {
+      const { title, id } = action.payload;
+
       const newList = {
-        title: action.payload,
+        title: title,
         cards: [],
-        id: `list-${++listID}`
+        id: `list-${id}`
       };
       return [...state, newList];
+    }
 
     case CONSTANTS.ADD_CARD: {
-      const newCard = {
-        id: ++cardId,
-        text: action.payload.text
-      };
+      console.log(action.type, 'LIST REDUCER');
+      const { listID, id } = action.payload;
+
       const newState = state.map(list => {
-        if (list.id === action.payload.listId) {
+        if (list.id === listID) {
           return {
             ...list,
-            cards: [...list.cards, newCard]
+            cards: [...list.cards, `card-${id}`]
           };
         } else {
           return list;
         }
       });
+
       return newState;
     }
     case CONSTANTS.DRAGGED:
@@ -60,6 +63,7 @@ const listReducer = (state = initialState, action) => {
       }
 
       return newState;
+
     default:
       return state;
   }

@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
 import { useDispatch } from 'react-redux';
-import addCard from '../redux/actions/cardActions';
 
 import styled from 'styled-components';
+import { addCard } from "../redux/actions";
 
 const AddButton = styled.button`
   color: white;
