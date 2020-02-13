@@ -42,8 +42,10 @@ const Board = () => {
           <ListContainer ref={provided.innerRef} {...provided.droppableProps}>
             {Object.keys(lists).map((key, index) => {
               const list = lists[key];
-              const listCards = list.cards.map(cardID => cards[cardID]);
-
+              const listCards =
+                list.cards.length > 0
+                  ? list.cards.map(cardID => cards[cardID])
+                  : [];
               return (
                 <List
                   key={list.id}

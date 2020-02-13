@@ -17,9 +17,9 @@ export const editCard = (id, newText) => {
   };
 };
 
-export const deleteCard = (id, listID) => {
+export const archiveCard = (card, listID) => {
   return {
-    type: CONSTANTS.DELETE_CARD,
-    payload: { id, listID }
+    type: CONSTANTS.ARCHIVE_CARD,
+    payload: { card, listID }
   };
 };

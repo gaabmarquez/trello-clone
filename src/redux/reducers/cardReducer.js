@@ -22,7 +22,6 @@ const cardReducer = (state = initialState, action) => {
   switch (action.type) {
     case CONSTANTS.ADD_CARD: {
       const { text, listID, id } = action.payload;
-      console.log(action.type, 'CARD REDUCER');
 
       const newCard = {
         text,
@@ -36,10 +35,15 @@ const cardReducer = (state = initialState, action) => {
       const { id, newText } = action.payload;
       const card = state[id];
       card.text = newText;
-      console.log('[card-{id}]:', id, card);
       return { ...state, [`card-${id}`]: card };
     }
+    case CONSTANTS.ARCHIVE_CARD: {
+      const { card } = action.payload;
+      const newState = state;
+      delete newState[card.id];
 
+      return newState;
+    }
     case CONSTANTS.DELETE_CARD: {
       const { id } = action.payload;
       const newState = state;

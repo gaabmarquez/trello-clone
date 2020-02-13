@@ -1,21 +1,9 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { addList } from '../redux/actions/listActions';
-import AddButton from '../components/AddButton';
 import styled from 'styled-components';
+import ListForm from './ListForm';
 
-const FormContainer = styled.div`
-  background-color: #ebecf0;
-  padding: 0.5em 0.4em;
-  border-radius: 3px;
-`;
-
-const FormInput = styled.input`
-  padding: 8px 12px;
-  resize: none;
-  width: 100%;
-  border: none;
-`;
 const AddListContainer = styled.div`
   min-width: 272px;
   color: #fff;
@@ -29,19 +17,6 @@ const AddAnotherList = styled.p`
   cursor: pointer;
   border-radius: 3px;
 `;
-
-const styles = {
-  actionContainer: {
-    display: 'flex',
-    alignItems: 'center',
-    paddingTop: '0.5em'
-  },
-  icon: {
-    color: '#42526e',
-    fontSize: '1.5em',
-    cursor: 'pointer'
-  }
-};
 
 const AddList = () => {
   const [formOpen, setFormOpen] = useState(false);
@@ -65,27 +40,13 @@ const AddList = () => {
   };
 
   const renderForm = () => (
-    <FormContainer>
-      <FormInput
-        autoFocus
-        placeholder='Enter a list title...'
-        onBlur={toggleForm}
-        value={text}
-        onChange={handleInputChange}
-      />
-      <div style={styles.actionContainer}>
-        <AddButton
-          btnText='Add List'
-          disabled={text.length === 0}
-          onClick={createList}
-        />
-
-        <span onClick={toggleForm}>
-          &nbsp;
-          <i className='fas fa-times fa-lg' style={styles.icon}></i>
-        </span>
-      </div>
-    </FormContainer>
+    <ListForm
+      text={text}
+      buttonText='Add List'
+      toggleForm={toggleForm}
+      handleInputChange={handleInputChange}
+      onSubmit={createList}
+    />
   );
 
   const renderButton = () => (

@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Draggable } from 'react-beautiful-dnd';
 import styled from 'styled-components';
 import CardForm from './CardForm';
 
 import { editCard } from '../redux/actions';
-import { useDispatch } from 'react-redux';
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+import Tooltip from 'react-bootstrap/Tooltip';
+
+import { archiveCard } from '../redux/actions/cardActions';
 
 const CardContainer = styled.div`
   margin-bottom: 0.5rem !important;
@@ -27,7 +31,7 @@ const EditButton = styled.div`
   }
 `;
 
-const DeleteButton = styled.div`
+const ArchiveButton = styled.div`
   position: absolute;
   display: none;
   right: 5px;
@@ -42,15 +46,10 @@ const DeleteButton = styled.div`
   }
 `;
 
-const Card = ({ id, text, index }) => {
+const Card = ({ id, text, index, listId }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [cardText, setText] = useState(text);
   const dispatch = useDispatch();
-
-  // const createCard = () => {
-  //   setText('');
-  //   dispatch(addCard(listId, text));
-  // };
 
   const saveCard = e => {
     e.preventDefault();
@@ -67,6 +66,11 @@ const Card = ({ id, text, index }) => {
     setIsEditing(!isEditing);
   };
 
+  const archive = () => {
+    dispatch(archiveCard({ id, text, list: listId }));
+    setIsEditing(false);
+  };
+
   const renderCard = () => {
     return (
       <Draggable draggableId={String(id)} index={index}>
@@ -77,19 +81,30 @@ const Card = ({ id, text, index }) => {
             {...provided.draggableProps}
             {...provided.dragHandleProps}
           >
-            <EditButton onClick={toggleEdit}>
-              <span>
-                &nbsp;
-                <i className='fas fa-pen'></i>
-              </span>
-            </EditButton>
+            <OverlayTrigger
+              placement='top'
+              overlay={<Tooltip>Edit Card</Tooltip>}
+            >
+              <EditButton onClick={toggleEdit}>
+                <span>
+                  &nbsp;
+                  <i className='fas fa-pen'></i>
+                </span>
+              </EditButton>
+            </OverlayTrigger>
 
-            <DeleteButton>
-              <span>
-                &nbsp;
-                <i className='fas fa-trash'></i>
-              </span>
-            </DeleteButton>
+            <OverlayTrigger
+              placement='top'
+              overlay={<Tooltip>Archive Card</Tooltip>}
+            >
+              <ArchiveButton onClick={archive}>
+                <span>
+                  &nbsp;
+                  <i className='fas fa-archive'></i>
+                </span>
+              </ArchiveButton>
+            </OverlayTrigger>
+
             <div className='card-body' style={styles.cardBody}>
               {text}
             </div>
@@ -125,8 +140,7 @@ const styles = {
     wordWrap: 'break-word'
   },
   cardBody: {
-    padding: '10px',
-    fontSize: '14px'
+    padding: '14px'
   }
 };
 

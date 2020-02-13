@@ -1,11 +1,12 @@
 import { combineReducers } from 'redux';
 import listReducer from './listReducer';
-import cardReducer from './cardReducers';
+import cardReducer from './cardReducer';
+import archiveReducer from './archiveReducer';
 
 const rootReducer = combineReducers({
   lists: listReducer,
-  cards: cardReducer
+  cards: cardReducer,
+  archived: archiveReducer
 });
 
 export default rootReducer;
- 

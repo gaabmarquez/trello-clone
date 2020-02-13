@@ -1,8 +1,10 @@
 import { CONSTANTS } from '../actions';
 
-const initialState = [{ id: 'list-0', cards: ['card-0'], title: 'To Do' },
-{ id: 'list-1', cards: ['card-1'], title: 'Doing' },
-{ id: 'list-2', cards: ['card-2'], title: 'Done' }];
+const initialState = [
+  { id: 'list-0', cards: ['card-0'], title: 'To Do' },
+  { id: 'list-1', cards: ['card-1'], title: 'Doing' },
+  { id: 'list-2', cards: ['card-2'], title: 'Done' }
+];
 
 const listReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -15,6 +17,23 @@ const listReducer = (state = initialState, action) => {
         id: `list-${id}`
       };
       return [...state, newList];
+    }
+
+    case CONSTANTS.EDIT_LIST: {
+      const { title, id } = action.payload;
+
+      const newState = state.map(list => {
+        if (list.id === id) {
+          return {
+            ...list,
+            title
+          };
+        } else {
+          return list;
+        }
+      });
+      console.log(newState);
+      return newState;
     }
 
     case CONSTANTS.ADD_CARD: {
@@ -34,6 +53,17 @@ const listReducer = (state = initialState, action) => {
 
       return newState;
     }
+    case CONSTANTS.ARCHIVE_CARD: {
+      const { card } = action.payload;
+
+      const newState = [...state];
+      const list = newState.find(list => list.id === card.list);
+      list.cards = list.cards.filter(cardID => cardID !== card.id);
+      // console.log('LISTS>>>>>>', newState);
+
+      return newState;
+    }
+
     case CONSTANTS.DRAGGED:
       const {
         droppableIdStart,
