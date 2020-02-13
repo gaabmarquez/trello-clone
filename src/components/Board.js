@@ -1,8 +1,7 @@
 import React from 'react';
 import List from './List';
-// import './Board.scss';
 import { useSelector } from 'react-redux';
-import AddListButton from './AddListButton';
+import AddList from './AddList';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import { useDispatch } from 'react-redux';
 import { sort } from '../redux/actions/listActions';
@@ -53,7 +52,7 @@ const Board = () => {
             ))}
             {provided.placeholder}
 
-            <AddListButton />
+            <AddList />
           </ListContainer>
         )}
       </Droppable>

@@ -1,18 +1,27 @@
 import React, { useState } from 'react';
+import TextareaAutosize from 'react-textarea-autosize';
 import { useDispatch } from 'react-redux';
-import { addList } from '../redux/actions/listActions';
+import addCard from '../redux/actions/cardActions';
 
-// import TextareaAutosize from 'react-textarea-autosize';
+import styled from 'styled-components';
 
-export default function AddListButton() {
+const AddButton = styled.button`
+  color: white;
+  background-color: #5aac44;
+  font-weight: bold;
+  margin-right: 1em;
+  &:hover {
+    color: white;
+  }
+`;
+export default function AddCard({ listId }) {
   const [formOpen, setFormOpen] = useState(false);
   const [text, setText] = useState('');
   const dispatch = useDispatch();
 
-  const createList = () => {
-    console.log(text);
-    dispatch(addList(text));
+  const createCard = () => {
     setText('');
+    dispatch(addCard(listId, text));
   };
 
   const handleInputChange = ev => {
@@ -24,23 +33,24 @@ export default function AddListButton() {
     setText('');
   };
   const formRender = () => (
-    <div style={styles.form}>
-      <input
+    <>
+      <TextareaAutosize
+        minRows={3}
         autoFocus
-        placeholder='Enter a list title...'
+        placeholder='Enter a title for this card...'
         onBlur={toggleForm}
         value={text}
         onChange={handleInputChange}
         style={styles.textArea}
       />
       <div style={styles.actionContainer}>
-        <button
+        <AddButton
           className='btn'
-          style={styles.actionContainer.addCardBtn}
-          onMouseDown={createList}
+          disabled={text.length === 0}
+          onMouseDown={createCard}
         >
-          Add List
-        </button>
+          Add Card
+        </AddButton>
         <span onClick={toggleForm}>
           &nbsp;
           <i
@@ -49,7 +59,7 @@ export default function AddListButton() {
           ></i>
         </span>
       </div>
-    </div>
+    </>
   );
 
   const buttonRender = () => (
@@ -59,7 +69,7 @@ export default function AddListButton() {
         setFormOpen(prev => !prev);
       }}
     >
-      <i className='fas fa-plus'> </i> &nbsp; Add another list
+      <i className='fas fa-plus'> </i> &nbsp; Add another card
     </p>
   );
   return (
@@ -71,42 +81,25 @@ export default function AddListButton() {
 
 const styles = {
   container: {
-    minWidth: '272px',
-    color: '#fff'
+    margin: '1em',
+    color: '#5e6c84'
   },
   addAnother: {
-    backgroundColor: 'hsla(0,0%,100%,.24)',
-    padding: '10px',
-    fontSize: '1.1em',
-    colort: 'white',
-    cursor: 'pointer',
-    boxSizing: 'border-box',
-    borderRadius: '3px'
+    margin: '0.5em 1em',
+    cursor: 'pointer'
   },
   actionContainer: {
     display: 'flex',
     alignItems: 'center',
-    paddingTop: '0.5em',
-    addCardBtn: {
-      color: 'white',
-      backgroundColor: '#5aac44',
-      fontWeight: 'bold',
-      marginRight: '1em'
-    },
+    marginTop: '0.5em',
     icon: {
-      color: '#42526e',
+      color: '#6b778c',
       fontSize: '1.5em',
       cursor: 'pointer'
     }
   },
-  form: {
-    backgroundColor: '#ebecf0',
-    padding: '0.5em 0.4em',
-    boxSizing: 'border-box',
-    borderRadius: '3px'
-  },
+
   textArea: {
-    padding: '8px 12px',
     resize: 'none',
     width: '100%',
     border: 'none'

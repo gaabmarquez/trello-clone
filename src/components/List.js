@@ -1,6 +1,6 @@
 import React from 'react';
 import Card from './Card';
-import AddCardButton from './AddCardButton';
+import AddCard from './AddCard';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
 import styled from 'styled-components';
 
@@ -35,7 +35,7 @@ const List = ({ id, title, cards, index }) => {
                   />
                 ))}
                 {provided.placeholder}
-                <AddCardButton listId={id} />
+                <AddCard listId={id} />
               </div>
             )}
           </Droppable>
