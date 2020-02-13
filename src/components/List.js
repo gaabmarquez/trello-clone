@@ -3,16 +3,17 @@ import Card from './Card';
 import AddCardButton from './AddCardButton';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
 import styled from 'styled-components';
-const List = ({ id, title, cards, index }) => {
-  const ListContainer = styled.div`
-    background-color: #ebecf0;
-    margin-right: 1em;
-    box-sizing: border-box;
-    border-radius: 3px;
-    min-width: 272px;
-    max-width: 272px;
-  `;
 
+const ListContainer = styled.div`
+  background-color: #ebecf0;
+  margin-right: 1em;
+  box-sizing: border-box;
+  border-radius: 3px;
+  min-width: 272px;
+  max-width: 272px;
+`;
+
+const List = ({ id, title, cards, index }) => {
   return (
     <Draggable draggableId={String(id)} index={index}>
       {provided => (
@@ -23,10 +24,7 @@ const List = ({ id, title, cards, index }) => {
         >
           <Droppable droppableId={String(id)}>
             {provided => (
-              <div
-                ref={provided.innerRef}
-                {...provided.droppableProps}
-              >
+              <div ref={provided.innerRef} {...provided.droppableProps}>
                 <h2 style={styles.title}>{title}</h2>
                 {cards.map((card, index) => (
                   <Card

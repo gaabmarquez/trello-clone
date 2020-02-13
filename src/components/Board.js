@@ -1,24 +1,27 @@
 import React from 'react';
-import List from '../List';
+import List from './List';
 // import './Board.scss';
 import { useSelector } from 'react-redux';
-import AddListButton from '../AddListButton';
+import AddListButton from './AddListButton';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import { useDispatch } from 'react-redux';
-import { sort } from '../../redux/actions/listActions';
+import { sort } from '../redux/actions/listActions';
 import styled from 'styled-components';
 
-const Board = () => {
-  const lists = useSelector(state => state.lists);
-  const dispatch = useDispatch();
 
-  const ListContainer = styled.div`
+const ListContainer = styled.div`
     display: flex;
     flex-direction: row;
     align-items: flex-start;
     margin-top: 2em;
   `;
 
+  
+const Board = () => {
+  const lists = useSelector(state => state.lists);
+  const dispatch = useDispatch();
+
+  
   const onDragEnd = ({ destination, source, draggableId, type }) => {
     if (destination) {
       dispatch(

@@ -2,14 +2,16 @@ import React from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 import styled from 'styled-components';
 
+const CardContainer = styled.div`
+margin: 10px;
+boxsizing: border-box;
+border-radius: 3px;
+height: auto;
+word-wrap: break-word;
+`;
+
 const Card = ({ id, text, index }) => {
-  const CardContainer = styled.div`
-    margin: 10px;
-    boxsizing: border-box;
-    border-radius: 3px;
-    height: auto;
-    word-wrap: break-word;
-  `;
+ 
 
   return (
     <Draggable draggableId={String(id)} index={index}>
