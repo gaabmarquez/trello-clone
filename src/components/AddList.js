@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { addList } from '../redux/actions/listActions';
-
+import AddButton from '../components/AddButton';
 import styled from 'styled-components';
 
 const FormContainer = styled.div`
   background-color: #ebecf0;
   padding: 0.5em 0.4em;
-  box-sizing: border-box;
   border-radius: 3px;
 `;
 
@@ -28,19 +27,9 @@ const AddAnotherList = styled.p`
   font-size: 1.1em;
   color: white;
   cursor: pointer;
-  box-sizing: border-box;
   border-radius: 3px;
 `;
 
-const AddButton = styled.button`
-  color: white;
-  background-color: #5aac44;
-  font-weight: bold;
-  margin-right: 1em;
-  &:hover {
-    color: white;
-  }
-`;
 const styles = {
   actionContainer: {
     display: 'flex',
@@ -75,7 +64,7 @@ const AddList = () => {
     setText('');
   };
 
-  const formRender = () => (
+  const renderForm = () => (
     <FormContainer>
       <FormInput
         autoFocus
@@ -86,12 +75,11 @@ const AddList = () => {
       />
       <div style={styles.actionContainer}>
         <AddButton
-          className='btn'
+          btnText='Add List'
           disabled={text.length === 0}
-          onMouseDown={createList}
-        >
-          Add List
-        </AddButton>
+          onClick={createList}
+        />
+
         <span onClick={toggleForm}>
           &nbsp;
           <i className='fas fa-times fa-lg' style={styles.icon}></i>
@@ -100,7 +88,7 @@ const AddList = () => {
     </FormContainer>
   );
 
-  const buttonRender = () => (
+  const renderButton = () => (
     <AddAnotherList
       onClick={() => {
         setFormOpen(prev => !prev);
@@ -111,7 +99,7 @@ const AddList = () => {
   );
   return (
     <AddListContainer>
-      {formOpen ? formRender() : buttonRender()}
+      {formOpen ? renderForm() : renderButton()}
     </AddListContainer>
   );
 };

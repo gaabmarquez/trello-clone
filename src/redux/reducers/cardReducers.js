@@ -1,20 +1,20 @@
-import { CONSTANTS } from "../actions";
+import { CONSTANTS } from '../actions';
 
 const initialState = {
-  "card-0": {
-    text: "To do task",
+  'card-0': {
+    text: 'To do task',
     id: `card-0`,
-    list: "list-0"
+    list: 'list-0'
   },
-  "card-1": {
-    text: "Doing task",
+  'card-1': {
+    text: 'Doing task',
     id: `card-1`,
-    list: "list-1"
+    list: 'list-1'
   },
-  "card-2": {
-    text: "Done task",
+  'card-2': {
+    text: 'Done task',
     id: `card-2`,
-    list: "list-2"
+    list: 'list-2'
   }
 };
 
@@ -36,6 +36,7 @@ const cardReducer = (state = initialState, action) => {
       const { id, newText } = action.payload;
       const card = state[id];
       card.text = newText;
+      console.log('[card-{id}]:', id, card);
       return { ...state, [`card-${id}`]: card };
     }
 

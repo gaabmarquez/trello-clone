@@ -7,7 +7,6 @@ import styled from 'styled-components';
 const ListContainer = styled.div`
   background-color: #ebecf0;
   margin-right: 1em;
-  box-sizing: border-box;
   border-radius: 3px;
   min-width: 272px;
   max-width: 272px;
@@ -50,7 +49,6 @@ const styles = {
   container: {
     backgroundColor: '#ebecf0',
     marginRight: '1em',
-    boxSizing: 'border-box',
     borderRadius: '3px',
     minWidth: '272px',
     maxWidth: '272px'

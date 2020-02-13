@@ -1,9 +1,6 @@
 import { CONSTANTS } from '.';
 import { uuid } from 'uuidv4';
 
-
-
-
 export const addCard = (listID, text) => {
   const id = uuid();
 
@@ -13,10 +10,10 @@ export const addCard = (listID, text) => {
   };
 };
 
-export const editCard = (id, listID, newText) => {
+export const editCard = (id, newText) => {
   return {
     type: CONSTANTS.EDIT_CARD,
-    payload: { id, listID, newText }
+    payload: { id, newText }
   };
 };
 
