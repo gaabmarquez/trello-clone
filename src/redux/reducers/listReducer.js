@@ -36,6 +36,14 @@ const listReducer = (state = initialState, action) => {
       return newState;
     }
 
+    case CONSTANTS.ARCHIVE_LIST: {
+      const { list: archivedList } = action.payload;
+
+      const newState = state.filter(list => list.id !== archivedList.id);
+      console.log('NEW STATE', archivedList.id, newState);
+      return newState;
+    }
+
     case CONSTANTS.ADD_CARD: {
       console.log(action.type, 'LIST REDUCER');
       const { listID, id } = action.payload;

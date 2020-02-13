@@ -44,10 +44,12 @@ const cardReducer = (state = initialState, action) => {
 
       return newState;
     }
-    case CONSTANTS.DELETE_CARD: {
-      const { id } = action.payload;
+    case CONSTANTS.ARCHIVE_LIST: {
+      const { cards } = action.payload;
+
       const newState = state;
-      delete newState[id];
+      cards.map(card => delete newState[card.id]);
+      console.log('CARDS',cards);
       return newState;
     }
     default:

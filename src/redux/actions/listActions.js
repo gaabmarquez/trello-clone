@@ -16,6 +16,12 @@ export const editList = (id, title) => {
   };
 };
 
+export const archiveList = (list, cards) => {
+  return {
+    type: CONSTANTS.ARCHIVE_LIST,
+    payload: { list, cards }
+  };
+};
 export const sort = (
   droppableIdStart,
   droppableIdEnd,

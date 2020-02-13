@@ -9,7 +9,7 @@ import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
 
 import ListForm from './ListForm';
-import { editList } from '../redux/actions/listActions';
+import { editList, archiveList } from '../redux/actions/listActions';
 
 const ListContainer = styled.div`
   background-color: #ebecf0;
@@ -55,8 +55,6 @@ const List = ({ id, title, cards = [], index }) => {
 
   const saveChanges = e => {
     e.preventDefault();
-    // setTitle('');
-    console.log('LIST ID', id, listTitle);
     dispatch(editList(id, listTitle));
     setIsEditing(false);
   };
@@ -70,7 +68,9 @@ const List = ({ id, title, cards = [], index }) => {
   };
 
   const archive = () => {
-    // dispatch(archiveCard({ id, text, list: listId }));
+    console.log('LIST ID', id, cards);
+
+    dispatch(archiveList({id, title}, cards));
     setIsEditing(false);
   };
 
