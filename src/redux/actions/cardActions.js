@@ -17,6 +17,16 @@ export const editCard = (id, newText) => {
   };
 };
 
+export const duplicateCard = (card) => {
+  const id = uuid();
+
+  card.id = id;
+  return {
+    type: CONSTANTS.DUPLICATE_CARD,
+    payload: { card }
+  };
+};
+
 export const archiveCard = (card, listID) => {
   return {
     type: CONSTANTS.ARCHIVE_CARD,

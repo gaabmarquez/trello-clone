@@ -64,9 +64,17 @@ const cardReducer = (state = initialState, action) => {
 
       const newState = state;
       cards.map(card => delete newState[card.id]);
-      console.log('CARDS',cards);
+      console.log('CARDS', cards);
       return newState;
     }
+    case CONSTANTS.DUPLICATE_CARD: {
+      const { card } = action.payload;
+
+      const newCard = { ...card };
+
+      return { ...state, [`card-${card.id}`]: newCard };
+    }
+
     default:
       return state;
   }

@@ -1,9 +1,9 @@
 import { CONSTANTS } from '../actions';
 
 const initialState = [
-  { id: 'list-0', cards: ['card-0','card-3'], title: 'To Do' },
-  { id: 'list-1', cards: ['card-1','card-4'], title: 'Doing' },
-  { id: 'list-2', cards: ['card-2','card-5'], title: 'Done' }
+  { id: 'list-0', cards: ['card-0', 'card-3'], title: 'To Do' },
+  { id: 'list-1', cards: ['card-1', 'card-4'], title: 'Doing' },
+  { id: 'list-2', cards: ['card-2', 'card-5'], title: 'Done' }
 ];
 
 const listReducer = (state = initialState, action) => {
@@ -53,6 +53,24 @@ const listReducer = (state = initialState, action) => {
           return {
             ...list,
             cards: [...list.cards, `card-${id}`]
+          };
+        } else {
+          return list;
+        }
+      });
+
+      return newState;
+    }
+
+    case CONSTANTS.DUPLICATE_CARD: {
+      console.log(action.type, 'LIST REDUCER');
+      const { card } = action.payload;
+
+      const newState = state.map(list => {
+        if (list.id === card.list) {
+          return {
+            ...list,
+            cards: [...list.cards, `card-${card.id}`]
           };
         } else {
           return list;

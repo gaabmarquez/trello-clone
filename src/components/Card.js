@@ -8,7 +8,7 @@ import { editCard } from '../redux/actions';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
 
-import { archiveCard } from '../redux/actions/cardActions';
+import { archiveCard, duplicateCard } from '../redux/actions/cardActions';
 
 const CardContainer = styled.div`
   margin-bottom: 0.5rem !important;
@@ -19,8 +19,26 @@ const CardContainer = styled.div`
 const EditButton = styled.div`
   position: absolute;
   display: none;
-  right: 5px;
-  top: 0px;
+  // right: 5px;
+  // top: 0px;
+
+  right: 25px;
+  bottom: 0px;
+  opacity: 0.5;
+  ${CardContainer}:hover & {
+    display: block;
+    cursor: pointer;
+  }
+  &:hover {
+    opacity: 0.8;
+  }
+`;
+
+const DuplicateButton = styled.div`
+  position: absolute;
+  display: none;
+  right: 45px;
+  bottom: 0px;
   opacity: 0.5;
   ${CardContainer}:hover & {
     display: block;
@@ -72,8 +90,12 @@ const Card = ({ id, text, index, listId }) => {
     setIsEditing(false);
   };
 
+  const duplicate = () => {
+    dispatch(duplicateCard({ id, text, list: listId }));
+    setIsEditing(false);
+  };
+
   const renderCard = () => {
-    // console.log(text, search, text.includes(search));
     return !search || text.toUpperCase().includes(search.toUpperCase()) ? (
       <Draggable draggableId={String(id)} index={index}>
         {provided => (
@@ -105,6 +127,18 @@ const Card = ({ id, text, index, listId }) => {
                   <i className='fas fa-archive'></i>
                 </span>
               </ArchiveButton>
+            </OverlayTrigger>
+
+            <OverlayTrigger
+              placement='top'
+              overlay={<Tooltip>Duplicate Card</Tooltip>}
+            >
+              <DuplicateButton onClick={duplicate}>
+                <span>
+                  &nbsp;
+                  <i className='fas fa-copy'></i>
+                </span>
+              </DuplicateButton>
             </OverlayTrigger>
 
             <div className='card-body' style={styles.cardBody}>
