@@ -4,7 +4,6 @@ import Board from './Board';
 import { useSelector } from 'react-redux';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
-import Form from 'react-bootstrap/Form';
 import FormControl from 'react-bootstrap/FormControl';
 import Button from 'react-bootstrap/Button';
 import styled from 'styled-components';
@@ -39,7 +38,6 @@ function App() {
   };
   const search = ev => {
     dispatch(filterCards(searchText));
-    // console.log('DISPATCHED,', ev.target.value)
   };
   return (
     <>

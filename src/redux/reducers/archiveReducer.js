@@ -13,18 +13,15 @@ const archiveReducer = (state = initialState, action) => {
       const newState = { ...state };
       newState.cards = [...newState.cards, card];
 
-      console.log('ARCHIVED', newState);
       return newState;
     }
     case CONSTANTS.ARCHIVE_LIST: {
       const { list, cards } = action.payload;
-      console.log(list);
 
       const newState = { ...state };
 
       newState.cards = [...newState.cards, ...cards];
       newState.lists = [...newState.lists, list];
-      console.log('NEW STATE', newState);
       return newState;
     }
 

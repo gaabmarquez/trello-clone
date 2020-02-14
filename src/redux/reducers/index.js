@@ -5,8 +5,8 @@ import archiveReducer from './archiveReducer';
 import searchReducer from './searchReducer';
 
 const rootReducer = combineReducers({
-  lists: listReducer,
   cards: cardReducer,
+  lists: listReducer,
   archived: archiveReducer,
   search: searchReducer
 });

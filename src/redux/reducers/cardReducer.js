@@ -1,4 +1,5 @@
 import { CONSTANTS } from '../actions';
+import { uuid } from 'uuidv4';
 
 const initialState = {
   'card-0': {
@@ -36,7 +37,8 @@ const initialState = {
 const cardReducer = (state = initialState, action) => {
   switch (action.type) {
     case CONSTANTS.ADD_CARD: {
-      const { text, listID, id } = action.payload;
+      const { text, listID } = action.payload;
+      const id = uuid();
 
       const newCard = {
         text,
@@ -64,15 +66,30 @@ const cardReducer = (state = initialState, action) => {
 
       const newState = state;
       cards.map(card => delete newState[card.id]);
-      console.log('CARDS', cards);
       return newState;
     }
     case CONSTANTS.DUPLICATE_CARD: {
       const { card } = action.payload;
-
+      const id = uuid();
+      card.id = id;
       const newCard = { ...card };
 
-      return { ...state, [`card-${card.id}`]: newCard };
+      return { ...state, [`card-${id}`]: newCard };
+    }
+    case CONSTANTS.DUPLICATE_LIST: {
+
+      const { cards } = action.payload;
+      const newCards = cards.map(card => {
+        card.id = uuid();
+        return card;
+      });
+      const newState = { ...state };
+
+      for (const card of newCards) {
+        newState[card.id] = card;
+      }
+      action.payload.cards = newCards;
+      return newState;
     }
 
     default:

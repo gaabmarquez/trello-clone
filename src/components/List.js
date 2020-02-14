@@ -9,7 +9,11 @@ import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
 
 import ListForm from './ListForm';
-import { editList, archiveList } from '../redux/actions/listActions';
+import {
+  editList,
+  archiveList,
+  duplicateList
+} from '../redux/actions/listActions';
 
 const ListContainer = styled.div`
   background-color: #ebecf0;
@@ -17,6 +21,21 @@ const ListContainer = styled.div`
   border-radius: 3px;
   min-width: 272px;
   max-width: 272px;
+`;
+
+const DuplicateButton = styled.div`
+  position: absolute;
+  // display: none;
+  right: 75px;
+  bottom: 5px;
+  opacity: 0.5;
+  ${ListContainer}:hover & {
+    display: block;
+    cursor: pointer;
+  }
+  &:hover {
+    opacity: 0.8;
+  }
 `;
 
 const EditButton = styled.div`
@@ -69,9 +88,13 @@ const List = ({ id, title, cards = [], index }) => {
   };
 
   const archive = () => {
-    console.log('LIST ID', id, cards);
 
-    dispatch(archiveList({id, title}, cards));
+    dispatch(archiveList({ id, title }, cards));
+    setIsEditing(false);
+  };
+  const duplicate = () => {
+
+    dispatch(duplicateList(id, title, cards));
     setIsEditing(false);
   };
 
@@ -104,6 +127,18 @@ const List = ({ id, title, cards = [], index }) => {
                     <i className='fas fa-pen'></i>
                   </span>
                 </EditButton>
+              </OverlayTrigger>
+
+              <OverlayTrigger
+                placement='top'
+                overlay={<Tooltip>Duplicate list</Tooltip>}
+              >
+                <DuplicateButton onClick={duplicate}>
+                  <span>
+                    &nbsp;
+                    <i className='fas fa-copy'></i>
+                  </span>
+                </DuplicateButton>
               </OverlayTrigger>
 
               <OverlayTrigger

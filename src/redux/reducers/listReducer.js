@@ -1,4 +1,5 @@
 import { CONSTANTS } from '../actions';
+import { uuid } from 'uuidv4';
 
 const initialState = [
   { id: 'list-0', cards: ['card-0', 'card-3'], title: 'To Do' },
@@ -9,8 +10,8 @@ const initialState = [
 const listReducer = (state = initialState, action) => {
   switch (action.type) {
     case CONSTANTS.ADD_LIST: {
-      const { title, id } = action.payload;
-
+      const { title } = action.payload;
+      const id = uuid();
       const newList = {
         title: title,
         cards: [],
@@ -18,7 +19,25 @@ const listReducer = (state = initialState, action) => {
       };
       return [...state, newList];
     }
+    case CONSTANTS.DUPLICATE_LIST: {
+      const { title, id, cards } = action.payload;
+      const cardsIds = cards.map(card => card.id);
 
+      //get index of list to be copied
+      const index = state.map(list => list.id).indexOf(id);
+
+      const newId = uuid();
+      const newList = {
+        title: title,
+        cards: cardsIds,
+        id: `list-${newId}`
+      };
+      const newState = [...state];
+
+      newState.splice(index, 0, newList);
+      return newState;
+
+    }
     case CONSTANTS.EDIT_LIST: {
       const { title, id } = action.payload;
 
@@ -32,7 +51,6 @@ const listReducer = (state = initialState, action) => {
           return list;
         }
       });
-      console.log(newState);
       return newState;
     }
 
@@ -40,12 +58,10 @@ const listReducer = (state = initialState, action) => {
       const { list: archivedList } = action.payload;
 
       const newState = state.filter(list => list.id !== archivedList.id);
-      console.log('NEW STATE', archivedList.id, newState);
       return newState;
     }
 
     case CONSTANTS.ADD_CARD: {
-      console.log(action.type, 'LIST REDUCER');
       const { listID, id } = action.payload;
 
       const newState = state.map(list => {
@@ -63,7 +79,6 @@ const listReducer = (state = initialState, action) => {
     }
 
     case CONSTANTS.DUPLICATE_CARD: {
-      console.log(action.type, 'LIST REDUCER');
       const { card } = action.payload;
 
       const newState = state.map(list => {
@@ -85,7 +100,6 @@ const listReducer = (state = initialState, action) => {
       const newState = [...state];
       const list = newState.find(list => list.id === card.list);
       list.cards = list.cards.filter(cardID => cardID !== card.id);
-      // console.log('LISTS>>>>>>', newState);
 
       return newState;
     }

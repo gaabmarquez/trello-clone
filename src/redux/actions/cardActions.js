@@ -1,12 +1,10 @@
 import { CONSTANTS } from '.';
-import { uuid } from 'uuidv4';
+// import { uuid } from 'uuidv4';
 
 export const addCard = (listID, text) => {
-  const id = uuid();
-
   return {
     type: CONSTANTS.ADD_CARD,
-    payload: { text, listID, id }
+    payload: { text, listID }
   };
 };
 
@@ -17,10 +15,7 @@ export const editCard = (id, newText) => {
   };
 };
 
-export const duplicateCard = (card) => {
-  const id = uuid();
-
-  card.id = id;
+export const duplicateCard = card => {
   return {
     type: CONSTANTS.DUPLICATE_CARD,
     payload: { card }

@@ -9,6 +9,13 @@ export const addList = title => {
   };
 };
 
+export const duplicateList = (id, title, cards) => {
+  return {
+    type: CONSTANTS.DUPLICATE_LIST,
+    payload: { id, title, cards }
+  };
+};
+
 export const editList = (id, title) => {
   return {
     type: CONSTANTS.EDIT_LIST,
