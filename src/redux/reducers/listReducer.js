@@ -1,9 +1,9 @@
 import { CONSTANTS } from '../actions';
 
 const initialState = [
-  { id: 'list-0', cards: ['card-0'], title: 'To Do' },
-  { id: 'list-1', cards: ['card-1'], title: 'Doing' },
-  { id: 'list-2', cards: ['card-2'], title: 'Done' }
+  { id: 'list-0', cards: ['card-0','card-3'], title: 'To Do' },
+  { id: 'list-1', cards: ['card-1','card-4'], title: 'Doing' },
+  { id: 'list-2', cards: ['card-2','card-5'], title: 'Done' }
 ];
 
 const listReducer = (state = initialState, action) => {

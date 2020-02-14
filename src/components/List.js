@@ -51,6 +51,7 @@ const ArchiveButton = styled.div`
 const List = ({ id, title, cards = [], index }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [listTitle, setTitle] = useState(title);
+
   const dispatch = useDispatch();
 
   const saveChanges = e => {

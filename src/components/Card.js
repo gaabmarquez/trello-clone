@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Draggable } from 'react-beautiful-dnd';
 import styled from 'styled-components';
 import CardForm from './CardForm';
@@ -50,6 +50,7 @@ const Card = ({ id, text, index, listId }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [cardText, setText] = useState(text);
   const dispatch = useDispatch();
+  const search = useSelector(state => state.search);
 
   const saveCard = e => {
     e.preventDefault();
@@ -72,7 +73,8 @@ const Card = ({ id, text, index, listId }) => {
   };
 
   const renderCard = () => {
-    return (
+    // console.log(text, search, text.includes(search));
+    return !search || text.toUpperCase().includes(search.toUpperCase()) ? (
       <Draggable draggableId={String(id)} index={index}>
         {provided => (
           <CardContainer
@@ -111,6 +113,8 @@ const Card = ({ id, text, index, listId }) => {
           </CardContainer>
         )}
       </Draggable>
+    ) : (
+      <> </>
     );
   };
   const renderEditForm = () => {

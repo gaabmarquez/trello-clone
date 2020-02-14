@@ -15,6 +15,21 @@ const initialState = {
     text: 'Done task',
     id: `card-2`,
     list: 'list-2'
+  },
+  'card-3': {
+    text: 'TO FILTER: To do task',
+    id: `card-3`,
+    list: 'list-0'
+  },
+  'card-4': {
+    text: 'TO FILTER: Doing task',
+    id: `card-4`,
+    list: 'list-1'
+  },
+  'card-5': {
+    text: 'TO FILTER: Done task',
+    id: `card-5`,
+    list: 'list-2'
   }
 };
 
