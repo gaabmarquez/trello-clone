@@ -2,9 +2,9 @@ import { CONSTANTS } from '../actions';
 import { uuid } from 'uuidv4';
 
 const initialState = [
-  { id: 'list-0', cards: ['card-0', 'card-3'], title: 'To Do' },
-  { id: 'list-1', cards: ['card-1', 'card-4'], title: 'Doing' },
-  { id: 'list-2', cards: ['card-2', 'card-5'], title: 'Done' }
+  { id: '10', cards: ['0', '3'], title: 'To Do' },
+  { id: '11', cards: ['1', '4'], title: 'Doing' },
+  { id: '12', cards: ['2', '5'], title: 'Done' }
 ];
 
 const listReducer = (state = initialState, action) => {
@@ -15,28 +15,26 @@ const listReducer = (state = initialState, action) => {
       const newList = {
         title: title,
         cards: [],
-        id: `list-${id}`
+        id
       };
       return [...state, newList];
     }
     case CONSTANTS.DUPLICATE_LIST: {
-      const { title, id, cards } = action.payload;
+      const { title, id, cards, newId } = action.payload;
       const cardsIds = cards.map(card => card.id);
 
       //get index of list to be copied
       const index = state.map(list => list.id).indexOf(id);
 
-      const newId = uuid();
       const newList = {
         title: title,
         cards: cardsIds,
-        id: `list-${newId}`
+        id: newId
       };
       const newState = [...state];
 
       newState.splice(index, 0, newList);
       return newState;
-
     }
     case CONSTANTS.EDIT_LIST: {
       const { title, id } = action.payload;
@@ -68,7 +66,7 @@ const listReducer = (state = initialState, action) => {
         if (list.id === listID) {
           return {
             ...list,
-            cards: [...list.cards, `card-${id}`]
+            cards: [...list.cards, id]
           };
         } else {
           return list;
@@ -85,7 +83,7 @@ const listReducer = (state = initialState, action) => {
         if (list.id === card.list) {
           return {
             ...list,
-            cards: [...list.cards, `card-${card.id}`]
+            cards: [...list.cards, card.id]
           };
         } else {
           return list;

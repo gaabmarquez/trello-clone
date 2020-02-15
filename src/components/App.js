@@ -19,7 +19,6 @@ const style = {
 };
 
 const SearchButton = styled(Button)`
-  // color: red;
   font-weight: bold;
   background: rgba(0, 0, 0, 0.2);
 `;

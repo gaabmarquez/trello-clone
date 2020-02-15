@@ -2,57 +2,58 @@ import { CONSTANTS } from '../actions';
 import { uuid } from 'uuidv4';
 
 const initialState = {
-  'card-0': {
+  '0': {
     text: 'To do task',
-    id: `card-0`,
-    list: 'list-0'
+    id: `0`,
+    list: '10'
   },
-  'card-1': {
+  '1': {
     text: 'Doing task',
-    id: `card-1`,
-    list: 'list-1'
+    id: `1`,
+    list: '11'
   },
-  'card-2': {
+  '2': {
     text: 'Done task',
-    id: `card-2`,
-    list: 'list-2'
+    id: `2`,
+    list: '12'
   },
-  'card-3': {
+  '3': {
     text: 'TO FILTER: To do task',
-    id: `card-3`,
-    list: 'list-0'
+    id: `3`,
+    list: '10'
   },
-  'card-4': {
+  '4': {
     text: 'TO FILTER: Doing task',
-    id: `card-4`,
-    list: 'list-1'
+    id: `4`,
+    list: '11'
   },
-  'card-5': {
+  '5': {
     text: 'TO FILTER: Done task',
-    id: `card-5`,
-    list: 'list-2'
+    id: `5`,
+    list: '12'
   }
 };
 
 const cardReducer = (state = initialState, action) => {
   switch (action.type) {
     case CONSTANTS.ADD_CARD: {
-      const { text, listID } = action.payload;
-      const id = uuid();
+      const { text, listID, id } = action.payload;
 
       const newCard = {
         text,
-        id: `card-${id}`,
+        id: id,
         list: listID
       };
-
-      return { ...state, [`card-${id}`]: newCard };
+// debugger;
+      return { ...state, [id]: newCard };
     }
     case CONSTANTS.EDIT_CARD: {
       const { id, newText } = action.payload;
+      console.log(state[id], id);
+      console.log(JSON.stringify(state));
       const card = state[id];
       card.text = newText;
-      return { ...state, [`card-${id}`]: card };
+      return { ...state, [id]: card };
     }
     case CONSTANTS.ARCHIVE_CARD: {
       const { card } = action.payload;
@@ -74,20 +75,26 @@ const cardReducer = (state = initialState, action) => {
       card.id = id;
       const newCard = { ...card };
 
-      return { ...state, [`card-${id}`]: newCard };
+      return { ...state, [id]: newCard };
     }
     case CONSTANTS.DUPLICATE_LIST: {
+      const { cards, newId } = action.payload;
+      let newCards = [];
 
-      const { cards } = action.payload;
-      const newCards = cards.map(card => {
-        card.id = uuid();
-        return card;
-      });
+      for (const card of cards) {
+        const newCard = { ...card };
+        newCard.id = uuid();
+        newCard.list = newId;
+        newCards.push(newCard);
+      }
+
       const newState = { ...state };
 
       for (const card of newCards) {
         newState[card.id] = card;
       }
+
+      // console.log(newCards[0].id, cards[0].id);
       action.payload.cards = newCards;
       return newState;
     }

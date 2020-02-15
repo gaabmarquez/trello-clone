@@ -25,7 +25,6 @@ const ListContainer = styled.div`
 
 const DuplicateButton = styled.div`
   position: absolute;
-  // display: none;
   right: 75px;
   bottom: 5px;
   opacity: 0.5;
@@ -40,7 +39,6 @@ const DuplicateButton = styled.div`
 
 const EditButton = styled.div`
   position: absolute;
-  // display: none;
   right: 45px;
   bottom: 5px;
   opacity: 0.5;
@@ -55,7 +53,6 @@ const EditButton = styled.div`
 
 const ArchiveButton = styled.div`
   position: absolute;
-  // display: none;
   right: 15px;
   bottom: 5px;
   opacity: 0.5;

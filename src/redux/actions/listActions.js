@@ -10,9 +10,10 @@ export const addList = title => {
 };
 
 export const duplicateList = (id, title, cards) => {
+  const newId = uuid();
   return {
     type: CONSTANTS.DUPLICATE_LIST,
-    payload: { id, title, cards }
+    payload: { id, title, cards, newId }
   };
 };
 

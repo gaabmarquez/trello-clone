@@ -19,8 +19,6 @@ const CardContainer = styled.div`
 const EditButton = styled.div`
   position: absolute;
   display: none;
-  // right: 5px;
-  // top: 0px;
 
   right: 25px;
   bottom: 0px;
@@ -142,7 +140,7 @@ const Card = ({ id, text, index, listId }) => {
             </OverlayTrigger>
 
             <div className='card-body' style={styles.cardBody}>
-              {text}
+              {text} 
             </div>
           </CardContainer>
         )}
