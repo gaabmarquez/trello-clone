@@ -77,13 +77,17 @@ const listReducer = (state = initialState, action) => {
     }
 
     case CONSTANTS.DUPLICATE_CARD: {
-      const { card } = action.payload;
+      const { card, oldId } = action.payload;
 
       const newState = state.map(list => {
         if (list.id === card.list) {
+          const index = list.cards.indexOf(oldId);
+          console.log(index, oldId, JSON.stringify(list.cards));
+          list.cards.splice(index, 0, card.id);
+
           return {
             ...list,
-            cards: [...list.cards, card.id]
+            cards: [...list.cards]
           };
         } else {
           return list;

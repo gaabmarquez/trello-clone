@@ -6,7 +6,7 @@ export const addCard = (listID, text) => {
 
   return {
     type: CONSTANTS.ADD_CARD,
-    payload: { text, listID, id}
+    payload: { text, listID, id }
   };
 };
 
@@ -18,9 +18,11 @@ export const editCard = (id, newText) => {
 };
 
 export const duplicateCard = card => {
+  const oldId = card.id;
+  card.id = uuid();
   return {
     type: CONSTANTS.DUPLICATE_CARD,
-    payload: { card }
+    payload: { card, oldId }
   };
 };
 

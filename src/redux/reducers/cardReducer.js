@@ -44,7 +44,7 @@ const cardReducer = (state = initialState, action) => {
         id: id,
         list: listID
       };
-// debugger;
+      // debugger;
       return { ...state, [id]: newCard };
     }
     case CONSTANTS.EDIT_CARD: {
@@ -71,11 +71,7 @@ const cardReducer = (state = initialState, action) => {
     }
     case CONSTANTS.DUPLICATE_CARD: {
       const { card } = action.payload;
-      const id = uuid();
-      card.id = id;
-      const newCard = { ...card };
-
-      return { ...state, [id]: newCard };
+      return { ...state, [card.id]: card };
     }
     case CONSTANTS.DUPLICATE_LIST: {
       const { cards, newId } = action.payload;

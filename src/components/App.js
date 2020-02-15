@@ -4,7 +4,6 @@ import Board from './Board';
 import { useSelector } from 'react-redux';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
-import FormControl from 'react-bootstrap/FormControl';
 import Button from 'react-bootstrap/Button';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
@@ -22,6 +21,19 @@ const SearchButton = styled(Button)`
   font-weight: bold;
   background: rgba(0, 0, 0, 0.2);
 `;
+
+const ClearSearh = styled.i`
+  right: 5px;
+  position: absolute;
+  top: 10px;
+  color: #6b778c;
+  cursor: pointer;
+  font-size: 1.2em;
+`;
+const SearchContainer = styled.div`
+  position: relative;
+`;
+
 function App() {
   const archived = useSelector(state => state.archived);
   const [searchText, setSearchText] = useState('');
@@ -35,24 +47,34 @@ function App() {
   const handleInputChange = ev => {
     setSearchText(ev.target.value);
   };
-  const search = ev => {
+  const search = () => {
     dispatch(filterCards(searchText));
   };
+  const clearSearh = () => {
+    setSearchText('');
+    dispatch(filterCards(''));
+  };
+
   return (
     <>
       <Navbar variant='dark' style={style.navContainer}>
         <Nav className='mr-auto'>
-          {/* <Form inline> */}
-          <FormControl
-            type='text'
-            value={searchText}
-            onKeyDown={handleKeyDown}
-            onChange={handleInputChange}
-            placeholder='Search text inside cards'
-            className='mr-sm-2'
-          />
-          <SearchButton onClick={search}> Search</SearchButton>
-          {/* </Form> */}
+          <SearchContainer>
+            <input
+              type='text'
+              value={searchText}
+              onKeyDown={handleKeyDown}
+              onChange={handleInputChange}
+              placeholder='Search text inside cards'
+              className='mr-sm-2  form-control'
+            />
+            {searchText.length > 0 ? (
+              <ClearSearh className='fas fa-times' onClick={clearSearh} />
+            ) : (
+              <> </>
+            )}
+          </SearchContainer>
+          <SearchButton onClick={search}>Search</SearchButton>
         </Nav>
       </Navbar>
       <div className='container-fluid mt-4'>
