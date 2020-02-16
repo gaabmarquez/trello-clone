@@ -1,7 +1,7 @@
 # Trello Clone
 
-This project was made to prove React / Redux knowledge.
-This project is a basic [trello.com](trello.com) clone, with minimum functionality.
+This project was made to prove React / Redux knowledge.   
+This project is a basic [trello.com](https://trello.com) clone, with minimum functionality.  
 A live version of this project can be found [here](https://gaabmarquez.github.io/trello-clone/)
 
 ## What can be done with this app?
@@ -24,7 +24,7 @@ A live version of this project can be found [here](https://gaabmarquez.github.io
 
 ## What can't be done with this app?
 
-- [ ] Undo last change ( archive, move, edit)
+- [ ] Undo last change (archive, move, edit)
 
 ## Guide
 
@@ -48,7 +48,7 @@ A live version of this project can be found [here](https://gaabmarquez.github.io
 
 ### How to edit a list:
 
-- Click on the pencil icon (for cards: you have to hover over it, and the menu will be displayed)
+- Click on the pencil icon 
 
 - Enter the new text / tile
 
@@ -68,7 +68,7 @@ A live version of this project can be found [here](https://gaabmarquez.github.io
 
 - Click on the Sheets icon
 
-- A new list will appear to the right of the selected one with the text Copy of `list name`
+- A new list will appear to the right of the selected one with the text `Copy of list name`
 
 - The new list will contain a copy of each card of the selected list
 
@@ -78,7 +78,7 @@ A live version of this project can be found [here](https://gaabmarquez.github.io
 
 - Click on the sheets icon
 
-- A new card will appear below of the selected one with the text Copy of `card text`
+- A new card will appear below of the selected one with the text `Copy of card text`
 
 ### How to archive a list:
 
