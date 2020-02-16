@@ -1,68 +1,105 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Trello Clone
 
-## Available Scripts
+This project was made to prove React / Redux knowledge.
+This project is a basic [trello.com](trello.com) clone, with minimum functionality.
+A live version of this project can be found [here](https://gaabmarquez.github.io/trello-clone/)
 
-In the project directory, you can run:
+## What can be done with this app?
 
-### `npm start`
+- [x] Create cards and lists
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- [x] Edit cards and lists
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+- [x] Seach cards by the text in them.
 
-### `npm test`
+- [x] Archive cards and lists
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- [x] Move cards and lists
 
-### `npm run build`
+- [x] Duplicate cards
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- [x] Duplicate lists and the cards in it
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+- [x] Automatically persist any change in the local storage
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## What can't be done with this app?
 
-### `npm run eject`
+- [ ] Undo last change ( archive, move, edit)
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## Guide
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### How to create a card:
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+- Select the list you want to add the card to
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+- Click on Add another card
 
-## Learn More
+- Enter the text for the card
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- Click on Add Card
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### How to create a list:
 
-### Code Splitting
+- Click on Add another list
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+- Enter title for the list
 
-### Analyzing the Bundle Size
+- Click on Add List
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+### How to edit a list:
 
-### Making a Progressive Web App
+- Click on the pencil icon (for cards: you have to hover over it, and the menu will be displayed)
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+- Enter the new text / tile
 
-### Advanced Configuration
+- Click on Save
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+### How to edit a card:
 
-### Deployment
+- Hover over a card and the menu will be displayed
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
+- Click on the pencil icon
 
-### `npm run build` fails to minify
+- Enter the new text / tile
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+- Click on Save
+
+### How to duplicate a list:
+
+- Click on the Sheets icon
+
+- A new list will appear to the right of the selected one with the text Copy of `list name`
+
+- The new list will contain a copy of each card of the selected list
+
+### How to duplicate a card:
+
+- Hover over a card and the menu will be displayed
+
+- Click on the sheets icon
+
+- A new card will appear below of the selected one with the text Copy of `card text`
+
+### How to archive a list:
+
+- Click on the archive box icon
+
+- The list will be archived
+
+### How to archive a card:
+
+- Hover over a card and the menu will be displayed
+
+- Click on the archive box icon
+
+- The list will be archived
+
+### How to search cards:
+
+- Select the text box on the top of the screen
+
+- Type the text you want to search
+
+- Press Enter or Click Search
+
+- To clean the search, click the cross icon inside the text box

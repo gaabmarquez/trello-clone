@@ -50,6 +50,7 @@ const styles = {
   textArea: {
     resize: 'none',
     width: '100%',
-    border: 'none'
+    border: 'none',
+    padding: '8px'
   }
 };
