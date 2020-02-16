@@ -16,11 +16,10 @@ const CardContainer = styled.div`
   margin-right: 0.5rem !important;
 `;
 
-const EditButton = styled.div`
+const DuplicateButton = styled.div`
   position: absolute;
   display: none;
-
-  right: 25px;
+  right: 70px;
   bottom: 0px;
   opacity: 0.5;
   ${CardContainer}:hover & {
@@ -28,14 +27,16 @@ const EditButton = styled.div`
     cursor: pointer;
   }
   &:hover {
+    color: #bf4600;
     opacity: 0.8;
   }
 `;
 
-const DuplicateButton = styled.div`
+const EditButton = styled.div`
   position: absolute;
   display: none;
-  right: 45px;
+
+  right: 40px;
   bottom: 0px;
   opacity: 0.5;
   ${CardContainer}:hover & {
@@ -43,6 +44,7 @@ const DuplicateButton = styled.div`
     cursor: pointer;
   }
   &:hover {
+    color: #bf4600;
     opacity: 0.8;
   }
 `;
@@ -50,7 +52,7 @@ const DuplicateButton = styled.div`
 const ArchiveButton = styled.div`
   position: absolute;
   display: none;
-  right: 5px;
+  right: 10px;
   bottom: 0px;
   opacity: 0.5;
   ${CardContainer}:hover & {
@@ -58,6 +60,7 @@ const ArchiveButton = styled.div`
     cursor: pointer;
   }
   &:hover {
+    color: #bf4600;
     opacity: 0.8;
   }
 `;
@@ -70,7 +73,7 @@ const Card = ({ id, text, index, listId }) => {
 
   const saveCard = e => {
     e.preventDefault();
-    setText('');
+    setText(cardText);
     dispatch(editCard(id, cardText));
     setIsEditing(false);
   };
@@ -89,7 +92,7 @@ const Card = ({ id, text, index, listId }) => {
   };
 
   const duplicate = () => {
-    dispatch(duplicateCard({ id, text, list: listId }));
+    dispatch(duplicateCard({ id, text: `Copy of ${text}`, list: listId }));
     setIsEditing(false);
   };
 
@@ -103,6 +106,17 @@ const Card = ({ id, text, index, listId }) => {
             {...provided.draggableProps}
             {...provided.dragHandleProps}
           >
+            <OverlayTrigger
+              placement='top'
+              overlay={<Tooltip>Duplicate Card</Tooltip>}
+            >
+              <DuplicateButton onClick={duplicate}>
+                <span>
+                  &nbsp;
+                  <i className='fas fa-copy'></i>
+                </span>
+              </DuplicateButton>
+            </OverlayTrigger>
             <OverlayTrigger
               placement='top'
               overlay={<Tooltip>Edit Card</Tooltip>}
@@ -127,20 +141,8 @@ const Card = ({ id, text, index, listId }) => {
               </ArchiveButton>
             </OverlayTrigger>
 
-            <OverlayTrigger
-              placement='top'
-              overlay={<Tooltip>Duplicate Card</Tooltip>}
-            >
-              <DuplicateButton onClick={duplicate}>
-                <span>
-                  &nbsp;
-                  <i className='fas fa-copy'></i>
-                </span>
-              </DuplicateButton>
-            </OverlayTrigger>
-
             <div className='card-body' style={styles.cardBody}>
-              {text} 
+              {text}
             </div>
           </CardContainer>
         )}
@@ -176,7 +178,9 @@ const styles = {
     wordWrap: 'break-word'
   },
   cardBody: {
-    padding: '14px'
+    padding: '5px 10px',
+    marginBottom: '20px'
+    // width: '90%'
   }
 };
 

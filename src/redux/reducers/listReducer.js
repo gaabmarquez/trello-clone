@@ -2,9 +2,9 @@ import { CONSTANTS } from '../actions';
 import { uuid } from 'uuidv4';
 
 const initialState = [
-  { id: '10', cards: ['0', '3'], title: 'To Do' },
-  { id: '11', cards: ['1', '4'], title: 'Doing' },
-  { id: '12', cards: ['2', '5'], title: 'Done' }
+  { id: '10', cards: [], title: 'To Do' },
+  { id: '11', cards: [], title: 'Doing' },
+  { id: '12', cards: [], title: 'Done' }
 ];
 
 const listReducer = (state = initialState, action) => {
@@ -27,13 +27,13 @@ const listReducer = (state = initialState, action) => {
       const index = state.map(list => list.id).indexOf(id);
 
       const newList = {
-        title: title,
+        title: `Copy of ${title}`,
         cards: cardsIds,
         id: newId
       };
       const newState = [...state];
 
-      newState.splice(index, 0, newList);
+      newState.splice(index + 1, 0, newList);
       return newState;
     }
     case CONSTANTS.EDIT_LIST: {
@@ -82,8 +82,7 @@ const listReducer = (state = initialState, action) => {
       const newState = state.map(list => {
         if (list.id === card.list) {
           const index = list.cards.indexOf(oldId);
-          console.log(index, oldId, JSON.stringify(list.cards));
-          list.cards.splice(index, 0, card.id);
+          list.cards.splice(index + 1, 0, card.id);
 
           return {
             ...list,

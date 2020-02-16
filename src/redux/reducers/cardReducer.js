@@ -1,38 +1,7 @@
 import { CONSTANTS } from '../actions';
 import { uuid } from 'uuidv4';
 
-const initialState = {
-  '0': {
-    text: 'To do task',
-    id: `0`,
-    list: '10'
-  },
-  '1': {
-    text: 'Doing task',
-    id: `1`,
-    list: '11'
-  },
-  '2': {
-    text: 'Done task',
-    id: `2`,
-    list: '12'
-  },
-  '3': {
-    text: 'TO FILTER: To do task',
-    id: `3`,
-    list: '10'
-  },
-  '4': {
-    text: 'TO FILTER: Doing task',
-    id: `4`,
-    list: '11'
-  },
-  '5': {
-    text: 'TO FILTER: Done task',
-    id: `5`,
-    list: '12'
-  }
-};
+const initialState = {};
 
 const cardReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -49,8 +18,6 @@ const cardReducer = (state = initialState, action) => {
     }
     case CONSTANTS.EDIT_CARD: {
       const { id, newText } = action.payload;
-      console.log(state[id], id);
-      console.log(JSON.stringify(state));
       const card = state[id];
       card.text = newText;
       return { ...state, [id]: card };
@@ -90,7 +57,6 @@ const cardReducer = (state = initialState, action) => {
         newState[card.id] = card;
       }
 
-      // console.log(newCards[0].id, cards[0].id);
       action.payload.cards = newCards;
       return newState;
     }

@@ -4,7 +4,6 @@ import Board from './Board';
 import { useSelector } from 'react-redux';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
-import Button from 'react-bootstrap/Button';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 import { filterCards } from '../redux/actions/searchActions';
@@ -17,9 +16,17 @@ const style = {
   }
 };
 
-const SearchButton = styled(Button)`
+const SearchButton = styled.button`
+  margin-left: 0.6em;
   font-weight: bold;
-  background: rgba(0, 0, 0, 0.2);
+  background-color: #006098;
+  border: 1px solid #bf4600;
+
+  color: white;
+  &:hover {
+    color: white;
+    background-color: #bf4600;
+  }
 `;
 
 const ClearSearh = styled.i`
@@ -30,8 +37,22 @@ const ClearSearh = styled.i`
   cursor: pointer;
   font-size: 1.2em;
 `;
+
 const SearchContainer = styled.div`
   position: relative;
+`;
+
+const ArchivedContainer = styled.p`
+  color: white;
+  font-weight: bold;
+`;
+const MainContainer = styled.div`
+  overflow: scroll;
+  height: 80vh;
+
+  h1 {
+    color: white;
+  }
 `;
 
 function App() {
@@ -57,7 +78,7 @@ function App() {
 
   return (
     <>
-      <Navbar variant='dark' style={style.navContainer}>
+      <Navbar style={style.navContainer}>
         <Nav className='mr-auto'>
           <SearchContainer>
             <input
@@ -74,19 +95,22 @@ function App() {
               <> </>
             )}
           </SearchContainer>
-          <SearchButton onClick={search}>Search</SearchButton>
+          <SearchButton className='btn' onClick={search}>
+            Search
+          </SearchButton>
         </Nav>
       </Navbar>
-      <div className='container-fluid mt-4'>
-        <h1 style={{ color: 'white' }}>Trello Clone </h1>
-        <p style={{ color: 'white', fontWeight: 'bold' }}>
+
+      <MainContainer className='container-fluid mt-4'>
+        <h1>Trello Clone </h1>
+        <ArchivedContainer>
           Archived Cards: {archived.cards.length}
           <br />
           Archived Lists: {archived.lists.length}
-        </p>
+        </ArchivedContainer>
 
         <Board />
-      </div>
+      </MainContainer>
     </>
   );
 }

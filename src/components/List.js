@@ -26,7 +26,7 @@ const ListContainer = styled.div`
 const DuplicateButton = styled.div`
   position: absolute;
   right: 75px;
-  bottom: 5px;
+  top: 5px;
   opacity: 0.5;
   ${ListContainer}:hover & {
     display: block;
@@ -34,13 +34,14 @@ const DuplicateButton = styled.div`
   }
   &:hover {
     opacity: 0.8;
+    color: #bf4600;
   }
 `;
 
 const EditButton = styled.div`
   position: absolute;
   right: 45px;
-  bottom: 5px;
+  top: 5px;
   opacity: 0.5;
   ${ListContainer}:hover & {
     display: block;
@@ -48,13 +49,14 @@ const EditButton = styled.div`
   }
   &:hover {
     opacity: 0.8;
+    color: #bf4600;
   }
 `;
 
 const ArchiveButton = styled.div`
   position: absolute;
   right: 15px;
-  bottom: 5px;
+  top: 5px;
   opacity: 0.5;
   ${ListContainer}:hover & {
     display: block;
@@ -62,6 +64,7 @@ const ArchiveButton = styled.div`
   }
   &:hover {
     opacity: 0.8;
+    color: #bf4600;
   }
 `;
 const List = ({ id, title, cards = [], index }) => {
@@ -85,12 +88,10 @@ const List = ({ id, title, cards = [], index }) => {
   };
 
   const archive = () => {
-
     dispatch(archiveList({ id, title }, cards));
     setIsEditing(false);
   };
   const duplicate = () => {
-
     dispatch(duplicateList(id, title, cards));
     setIsEditing(false);
   };
@@ -187,7 +188,9 @@ const styles = {
   },
   title: {
     padding: '10px',
-    fontSize: '1.2em'
+    fontSize: '1.2em',
+    wordBreak: 'break-all',
+    width: '70%'
   }
 };
 export default List;
