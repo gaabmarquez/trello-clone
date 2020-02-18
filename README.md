@@ -1,6 +1,6 @@
 # Trello Clone
 
-This project was made to prove React / Redux knowledge.   
+This project was made to prove React / Redux knowledge.  
 This project is a basic [trello.com](https://trello.com) clone, with minimum functionality.  
 A live version of this project can be found [here](https://gaabmarquez.github.io/trello-clone/)
 
@@ -22,9 +22,7 @@ A live version of this project can be found [here](https://gaabmarquez.github.io
 
 - [x] Automatically persist any change in the local storage
 
-## What can't be done with this app?
-
-- [ ] Undo last change (archive, move, edit)
+- [x] Undo last change (archive, move, edit)
 
 ## Guide
 
@@ -38,6 +36,40 @@ A live version of this project can be found [here](https://gaabmarquez.github.io
 
 - Click on Add Card
 
+### How to edit a card:
+
+- Hover over a card and the menu will be displayed
+
+- Click on the pencil icon
+
+- Enter the new text / tile
+
+- Click on Save
+
+### How to duplicate a card:
+
+- Hover over a card and the menu will be displayed
+
+- Click on the sheets icon
+
+- A new card will appear below of the selected one with the text `Copy of card text`
+
+### How to archive a card:
+
+- Hover over a card and the menu will be displayed
+
+- Click on the archive box icon
+
+- The list will be archived
+
+### How to search cards:
+
+- Select the text box on the top of the screen
+
+- Type the text you want to search, automatically will filter the cards
+
+- To clean the search, click the cross icon inside the text box or delete all the text
+
 ### How to create a list:
 
 - Click on Add another list
@@ -47,16 +79,6 @@ A live version of this project can be found [here](https://gaabmarquez.github.io
 - Click on Add List
 
 ### How to edit a list:
-
-- Click on the pencil icon 
-
-- Enter the new text / tile
-
-- Click on Save
-
-### How to edit a card:
-
-- Hover over a card and the menu will be displayed
 
 - Click on the pencil icon
 
@@ -72,34 +94,17 @@ A live version of this project can be found [here](https://gaabmarquez.github.io
 
 - The new list will contain a copy of each card of the selected list
 
-### How to duplicate a card:
-
-- Hover over a card and the menu will be displayed
-
-- Click on the sheets icon
-
-- A new card will appear below of the selected one with the text `Copy of card text`
-
 ### How to archive a list:
 
 - Click on the archive box icon
 
 - The list will be archived
 
-### How to archive a card:
+### How to undo last performed action
 
-- Hover over a card and the menu will be displayed
+- Click on undo last action button
 
-- Click on the archive box icon
+### How to see archived lists and cards
 
-- The list will be archived
-
-### How to search cards:
-
-- Select the text box on the top of the screen
-
-- Type the text you want to search
-
-- Press Enter or Click Search
-
-- To clean the search, click the cross icon inside the text box
+- Click on Show Menu button
+- Archived list and cards will be displayed

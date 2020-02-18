@@ -66,7 +66,7 @@ const Board = () => {
               onClick={undo}
               disabled={lists.past.length === 0 || !cards.past}
             >
-              {cards.past !== undefined}
+              <i class='fas fa-undo-alt mr-2'></i>
               Undo last action
             </MenuButton>
 
@@ -97,7 +97,5 @@ const Board = () => {
     </DragDropContext>
   );
 };
-
-
 
 export default Board;
