@@ -247,17 +247,10 @@ const listReducer = (state = initialState, action) => {
     }
 
     case CONSTANTS.UNDO_LAST_ACTION: {
-      console.log(
-        !actionsThatNotAffectState.includes(lastAction),
-        lastAction,
-        state.past.length
-      );
       if (
         state.past.length > 0 &&
         !actionsThatNotAffectState.includes(lastAction)
       ) {
-        console.log('UNDO LISTS');
-
         const newState = {
           past: [],
           present: [...state.past],

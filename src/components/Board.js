@@ -64,9 +64,9 @@ const Board = () => {
             <MenuButton
               className='btn'
               onClick={undo}
-              disabled={lists.past.length === 0 || !cards.past}
+              disabled={lists.past.length === 0 && !cards.past}
             >
-              <i class='fas fa-undo-alt mr-2'></i>
+              <i className='fas fa-undo-alt mr-2'></i>
               Undo last action
             </MenuButton>
 

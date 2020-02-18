@@ -14,7 +14,7 @@ const ArchivedContainer = styled.div`
   padding: 14px 20px;
   height: 90vh;
   margin-right: 0;
-  min-width: 300px;
+  min-width: 320px;
   h2 {
     text-decoration: underline;
     text-align: center;
