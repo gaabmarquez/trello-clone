@@ -110,9 +110,10 @@ const cardReducer = (state = initialState, action) => {
     }
 
     case CONSTANTS.UNDO_LAST_ACTION: {
+      console.log(state.past);
       if (state.past && !actionsThatNotAffectState.includes(lastAction)) {
         return {
-          past: {},
+          past: undefined,
           present: { ...state.past },
           future: { ...state.present }
         };
