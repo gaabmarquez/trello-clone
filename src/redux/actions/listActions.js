@@ -30,6 +30,18 @@ export const archiveList = (list, cards) => {
     payload: { list, cards }
   };
 };
+
+export const undoLastAction = () => {
+  return {
+    type: CONSTANTS.UNDO_LAST_ACTION
+  };
+};
+
+export const redoLastAction = () => {
+  return {
+    type: CONSTANTS.REDO_LAST_ACTION
+  };
+};
 export const sort = (
   droppableIdStart,
   droppableIdEnd,

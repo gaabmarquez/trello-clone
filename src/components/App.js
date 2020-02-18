@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './App.scss';
 import Board from './Board';
-import { useSelector } from 'react-redux';
+import Archived from './Archived';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import styled from 'styled-components';
@@ -16,18 +16,6 @@ const style = {
   }
 };
 
-const SearchButton = styled.button`
-  margin-left: 0.6em;
-  font-weight: bold;
-  background-color: #006098;
-  border: 1px solid #bf4600;
-
-  color: white;
-  &:hover {
-    color: white;
-    background-color: #bf4600;
-  }
-`;
 
 const ClearSearh = styled.i`
   right: 5px;
@@ -42,10 +30,6 @@ const SearchContainer = styled.div`
   position: relative;
 `;
 
-const ArchivedContainer = styled.p`
-  color: white;
-  font-weight: bold;
-`;
 const MainContainer = styled.div`
   overflow: scroll;
   height: 80vh;
@@ -56,14 +40,11 @@ const MainContainer = styled.div`
 `;
 
 function App() {
-  const archived = useSelector(state => state.archived);
   const [searchText, setSearchText] = useState('');
   const dispatch = useDispatch();
 
-  const handleKeyDown = ev => {
-    if (ev.keyCode === 13) {
-      search();
-    }
+  const handleKeyUp = ev => {
+    search();
   };
   const handleInputChange = ev => {
     setSearchText(ev.target.value);
@@ -84,7 +65,7 @@ function App() {
             <input
               type='text'
               value={searchText}
-              onKeyDown={handleKeyDown}
+              onKeyUp={handleKeyUp}
               onChange={handleInputChange}
               placeholder='Search text inside cards'
               className='mr-sm-2  form-control'
@@ -95,21 +76,14 @@ function App() {
               <> </>
             )}
           </SearchContainer>
-          <SearchButton className='btn' onClick={search}>
-            Search
-          </SearchButton>
         </Nav>
       </Navbar>
 
       <MainContainer className='container-fluid mt-4'>
         <h1>Trello Clone </h1>
-        <ArchivedContainer>
-          Archived Cards: {archived.cards.length}
-          <br />
-          Archived Lists: {archived.lists.length}
-        </ArchivedContainer>
 
         <Board />
+        <Archived />
       </MainContainer>
     </>
   );
