@@ -60,10 +60,8 @@ function App() {
   const [searchText, setSearchText] = useState('');
   const dispatch = useDispatch();
 
-  const handleKeyDown = ev => {
-    if (ev.keyCode === 13) {
-      search();
-    }
+  const handleKeyUp = ev => {
+    search();
   };
   const handleInputChange = ev => {
     setSearchText(ev.target.value);
@@ -84,7 +82,7 @@ function App() {
             <input
               type='text'
               value={searchText}
-              onKeyDown={handleKeyDown}
+              onKeyUp={handleKeyUp}
               onChange={handleInputChange}
               placeholder='Search text inside cards'
               className='mr-sm-2  form-control'

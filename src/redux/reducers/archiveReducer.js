@@ -1,16 +1,15 @@
 import { CONSTANTS } from '../actions';
 
 const initialState = {
-  past: [],
+  past: {},
   present: {
     lists: [],
     cards: []
   },
-  future: []
+  future: {}
 };
 
-// let lastAction;
-let lastActions =[];
+let lastAction;
 
 const actionsThatAffectState = [CONSTANTS.ARCHIVE_CARD, CONSTANTS.ARCHIVE_LIST];
 
@@ -19,17 +18,12 @@ const archiveReducer = (state = initialState, action) => {
     action.type !== CONSTANTS.UNDO_LAST_ACTION &&
     action.type !== CONSTANTS.REDO_LAST_ACTION
   ) {
-    // lastAction = action.type;
-    lastActions.unshift(action.type)
-
+    lastAction = action.type;
   }
 
   switch (action.type) {
     case CONSTANTS.ARCHIVE_CARD: {
       const { card } = action.payload;
-
-      const newPast = [...state.past];
-      newPast.unshift({ ...state.present });
 
       const newPresent = {
         ...state.present,
@@ -37,7 +31,7 @@ const archiveReducer = (state = initialState, action) => {
       };
       const newState = {
         ...state,
-        past: newPast,
+        past: { ...state.present },
         present: newPresent
       };
       return newState;
@@ -45,17 +39,14 @@ const archiveReducer = (state = initialState, action) => {
     case CONSTANTS.ARCHIVE_LIST: {
       const { list, cards } = action.payload;
 
-      const newPast = [...state.past];
-      newPast.unshift({ ...state.present });
-
       const newPresent = {
         ...state.present,
-        cards: [...state.present.cards, [...cards]],
-        lists: [...state.present.cards, { ...list }]
+        cards: [...state.present.cards, ...cards],
+        lists: [...state.present.lists, { ...list }]
       };
       const newState = {
         ...state,
-        past: newPast,
+        past: { ...state.present },
         present: newPresent
       };
       return newState;
@@ -63,37 +54,28 @@ const archiveReducer = (state = initialState, action) => {
 
     case CONSTANTS.UNDO_LAST_ACTION: {
       if (
-        state.past.length > 0 &&
-        actionsThatAffectState.includes(lastActions.shift())
+        state.past &&
+        actionsThatAffectState.includes(lastAction)
       ) {
-        console.log('LAST ACTION', lastActions[0]);
-        const newPresent = state.past.shift();
-        const newFuture = [...state.future];
-        newFuture.unshift({ ...state.present });
-
-        const newState = {
-          past: [...state.past],
-          present: newPresent,
-          future: newFuture
+        return {
+          past: {},
+          present: { ...state.past },
+          future: { ...state.present }
         };
-        return newState;
       }
       return state;
     }
 
     case CONSTANTS.REDO_LAST_ACTION: {
       if (
-        state.future.length > 0 &&
-        actionsThatAffectState.includes(lastActions.shift())
+        state.future &&
+        actionsThatAffectState.includes(lastAction)
       ) {
-        const newPresent = state.future.shift();
-
-        const newState = {
-          past: [...state.past, state.present],
-          present: newPresent,
-          future: [...state.future]
+        return {
+          past: { ...state.present },
+          present: { ...state.future },
+          future: {}
         };
-        return newState;
       }
 
       return state;

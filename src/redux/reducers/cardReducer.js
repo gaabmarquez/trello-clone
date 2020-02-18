@@ -2,12 +2,11 @@ import { CONSTANTS } from '../actions';
 import { uuid } from 'uuidv4';
 
 const initialState = {
-  past: [],
+  past: {},
   present: {},
-  future: []
+  future: {}
 };
-// let lastAction;
-let lastActions = [];
+let lastAction;
 
 const actionsThatNotAffectState = [
   CONSTANTS.DRAGGED,
@@ -20,8 +19,7 @@ const cardReducer = (state = initialState, action) => {
     action.type !== CONSTANTS.UNDO_LAST_ACTION &&
     action.type !== CONSTANTS.REDO_LAST_ACTION
   ) {
-    // lastAction = action.type;
-    lastActions.unshift(action.type);
+    lastAction = action.type;
   }
 
   switch (action.type) {
@@ -34,28 +32,22 @@ const cardReducer = (state = initialState, action) => {
         list: listID
       };
 
-      const newPast = [...state.past];
-      newPast.unshift({ ...state.present });
-      const newState = {
+      return {
         ...state,
-        past: newPast,
+        past: { ...state.present },
         present: { ...state.present, [id]: newCard }
       };
-      return newState;
     }
     case CONSTANTS.EDIT_CARD: {
       const { id, newText } = action.payload;
       const card = { ...state.present[id] };
       card.text = newText;
 
-      const newPast = [...state.past];
-      newPast.unshift({ ...state.present });
-      const newState = {
+      return {
         ...state,
-        past: newPast,
+        past: { ...state.present },
         present: { ...state.present, [id]: card }
       };
-      return newState;
     }
     case CONSTANTS.ARCHIVE_CARD: {
       const { card } = action.payload;
@@ -63,11 +55,9 @@ const cardReducer = (state = initialState, action) => {
       const newPresent = { ...state.present };
       delete newPresent[card.id];
 
-      const newPast = [...state.past];
-      newPast.unshift({ ...state.present });
       const newState = {
         ...state,
-        past: newPast,
+        past: { ...state.present },
         present: newPresent
       };
       return newState;
@@ -78,11 +68,9 @@ const cardReducer = (state = initialState, action) => {
       const newPresent = { ...state.present };
       cards.map(card => delete newPresent[card.id]);
 
-      const newPast = [...state.past];
-      newPast.unshift({ ...state.present });
       const newState = {
         ...state,
-        past: newPast,
+        past: { ...state.present },
         present: newPresent
       };
       return newState;
@@ -90,11 +78,9 @@ const cardReducer = (state = initialState, action) => {
     case CONSTANTS.DUPLICATE_CARD: {
       const { card } = action.payload;
 
-      const newPast = [...state.past];
-      newPast.unshift({ ...state.present });
       const newState = {
         ...state,
-        past: newPast,
+        past: { ...state.present },
         present: { ...state.present, [card.id]: card }
       };
       return newState;
@@ -114,49 +100,33 @@ const cardReducer = (state = initialState, action) => {
       }
 
       action.payload.cards = newCards;
-      // return newState;
-      const newPast = [...state.past];
-      newPast.unshift({ ...state.present });
+
       const newState = {
         ...state,
-        past: newPast,
+        past: { ...state.present },
         present: newPresent
       };
       return newState;
     }
 
     case CONSTANTS.UNDO_LAST_ACTION: {
-      if (
-        state.past.length > 0 &&
-        !actionsThatNotAffectState.includes(lastActions.shift())
-      ) {
-        const newPresent = state.past.shift();
-        const newFuture = [...state.future];
-        newFuture.unshift({ ...state.present });
-
-        const newState = {
-          past: [...state.past],
-          present: newPresent,
-          future: newFuture
+      if (state.past && !actionsThatNotAffectState.includes(lastAction)) {
+        return {
+          past: {},
+          present: { ...state.past },
+          future: { ...state.present }
         };
-        return newState;
       }
       return state;
     }
 
     case CONSTANTS.REDO_LAST_ACTION: {
-      if (
-        state.future.length > 0 &&
-        !actionsThatNotAffectState.includes(lastActions.shift())
-      ) {
-        const newPresent = state.future.shift();
-
-        const newState = {
-          past: [...state.past, state.present],
-          present: newPresent,
-          future: [...state.future]
+      if (state.future && !actionsThatNotAffectState.includes(lastAction)) {
+        return {
+          past: { ...state.present },
+          present: { ...state.future },
+          future: {}
         };
-        return newState;
       }
 
       return state;

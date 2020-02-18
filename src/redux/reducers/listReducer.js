@@ -10,8 +10,7 @@ const initialState = {
   ],
   future: []
 };
-// let lastAction;
-let lastActions =[];
+let lastAction;
 
 const actionsThatNotAffectState = [CONSTANTS.EDIT_CARD];
 
@@ -20,8 +19,7 @@ const listReducer = (state = initialState, action) => {
     action.type !== CONSTANTS.UNDO_LAST_ACTION &&
     action.type !== CONSTANTS.REDO_LAST_ACTION
   ) {
-    // lastAction = action.type;
-    lastActions.unshift(action.type)
+    lastAction = action.type;
   }
 
   switch (action.type) {
@@ -33,11 +31,10 @@ const listReducer = (state = initialState, action) => {
         cards: [],
         id
       };
-      const newPast = [...state.past];
-      newPast.unshift([...state.present]);
+
       const newState = {
         ...state,
-        past: newPast,
+        past: [...state.present],
         present: [...state.present, newList]
       };
       return newState;
@@ -58,11 +55,9 @@ const listReducer = (state = initialState, action) => {
 
       newPresent.splice(index + 1, 0, newList);
 
-      const newPast = [...state.past];
-      newPast.unshift([...state.present]);
       const newState = {
         ...state,
-        past: newPast,
+        past: [...state.present],
         present: newPresent
       };
       return newState;
@@ -80,11 +75,10 @@ const listReducer = (state = initialState, action) => {
           return list;
         }
       });
-      const newPast = [...state.past];
-      newPast.unshift([...state.present]);
+
       const newState = {
         ...state,
-        past: newPast,
+        past: [...state.present],
         present: newPresent
       };
       return newState;
@@ -97,11 +91,9 @@ const listReducer = (state = initialState, action) => {
         list => list.id !== archivedList.id
       );
 
-      const newPast = [...state.past];
-      newPast.unshift([...state.present]);
       const newState = {
         ...state,
-        past: newPast,
+        past: [...state.present],
         present: newPresent
       };
       return newState;
@@ -121,11 +113,9 @@ const listReducer = (state = initialState, action) => {
         }
       });
 
-      const newPast = [...state.past];
-      newPast.unshift([...state.present]);
       const newState = {
         ...state,
-        past: newPast,
+        past: [...state.present],
         present: newPresent
       };
       return newState;
@@ -133,9 +123,6 @@ const listReducer = (state = initialState, action) => {
 
     case CONSTANTS.DUPLICATE_CARD: {
       const { card, oldId } = action.payload;
-
-      const newPast = [...state.past];
-      newPast.unshift([...state.present]);
 
       const newPresent = state.present.map(list => {
         if (list.id === card.list) {
@@ -154,16 +141,13 @@ const listReducer = (state = initialState, action) => {
 
       const newState = {
         ...state,
-        past: newPast,
+        past: [...state.present],
         present: newPresent
       };
       return newState;
     }
     case CONSTANTS.ARCHIVE_CARD: {
       const { card } = action.payload;
-
-      const newPast = [...state.past];
-      newPast.unshift([...state.present]);
 
       const list = state.present.find(list => list.id === card.list);
       let newCards = [...list.cards];
@@ -183,7 +167,7 @@ const listReducer = (state = initialState, action) => {
 
       const newState = {
         ...state,
-        past: newPast,
+        past: [...state.present],
         present: newPresent
       };
       return newState;
@@ -198,8 +182,6 @@ const listReducer = (state = initialState, action) => {
         type
       } = action.payload;
 
-      const newPast = [...state.past];
-      newPast.unshift([...state.present]);
       let newPresent;
       if (type === 'list') {
         newPresent = [...state.present];
@@ -258,25 +240,28 @@ const listReducer = (state = initialState, action) => {
       }
       const newState = {
         ...state,
-        past: newPast,
+        past: [...state.present],
         present: newPresent
       };
       return newState;
     }
 
     case CONSTANTS.UNDO_LAST_ACTION: {
+      console.log(
+        !actionsThatNotAffectState.includes(lastAction),
+        lastAction,
+        state.past.length
+      );
       if (
         state.past.length > 0 &&
-        !actionsThatNotAffectState.includes(lastActions.shift())
+        !actionsThatNotAffectState.includes(lastAction)
       ) {
-        const newPresent = state.past.shift();
-        const newFuture = [...state.future];
-        newFuture.unshift([...state.present]);
+        console.log('UNDO LISTS');
 
         const newState = {
-          past: [...state.past],
-          present: newPresent,
-          future: newFuture
+          past: [],
+          present: [...state.past],
+          future: [...state.present]
         };
         return newState;
       }
@@ -286,14 +271,12 @@ const listReducer = (state = initialState, action) => {
     case CONSTANTS.REDO_LAST_ACTION: {
       if (
         state.future.length > 0 &&
-        !actionsThatNotAffectState.includes(lastActions.shift())
+        !actionsThatNotAffectState.includes(lastAction)
       ) {
-        const newPresent = state.future.shift();
-
         const newState = {
-          past: [...state.past, state.present],
-          present: newPresent,
-          future: [...state.future]
+          past: [...state.present],
+          present: [...state.future],
+          future: []
         };
         return newState;
       }

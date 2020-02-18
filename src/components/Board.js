@@ -6,7 +6,7 @@ import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import { useDispatch } from 'react-redux';
 import { sort } from '../redux/actions/listActions';
 import styled from 'styled-components';
-import { undoLastAction, redoLastAction } from '../redux/actions/listActions';
+import { undoLastAction } from '../redux/actions/listActions';
 
 const ListContainer = styled.div`
   display: flex;
@@ -23,9 +23,6 @@ const Board = () => {
 
   const undo = () => {
     dispatch(undoLastAction());
-  };
-  const redo = () => {
-    dispatch(redoLastAction());
   };
 
   const onDragEnd = ({ destination, source, draggableId, type }) => {
@@ -49,20 +46,13 @@ const Board = () => {
         {provided => (
           <ListContainer ref={provided.innerRef} {...provided.droppableProps}>
             <button
+            className="btn btn-info"
               style={styles.undo}
               onClick={undo}
-              disabled={lists.past.length === 0 || cards.past.length === 0}
+              disabled={lists.past.length === 0 || !cards.past}
             >
               {' '}
               UNDO LAST ACTION
-            </button>
-            <button
-              style={styles.redo}
-              onClick={redo}
-              disabled={lists.future.length === 0 || cards.future.length === 0}
-            >
-              {' '}
-              REDO!!
             </button>
 
             {Object.keys(lists.present).map((key, index) => {
@@ -97,7 +87,7 @@ const styles = {
   undo: {
     position: 'absolute',
     top: '10px',
-    right: '30%'
+    right: '10px'
   },
   redo: {
     position: 'absolute',

@@ -180,7 +180,6 @@ const styles = {
   cardBody: {
     padding: '5px 10px',
     marginBottom: '20px'
-    // width: '90%'
   }
 };
 
