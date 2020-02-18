@@ -3,15 +3,27 @@ import { uuid } from 'uuidv4';
 
 const initialState = {
   past: [],
-  future: [],
   present: [
     { id: '10', cards: [], title: 'To Do' },
     { id: '11', cards: [], title: 'Doing' },
     { id: '12', cards: [], title: 'Done' }
-  ]
+  ],
+  future: []
 };
+// let lastAction;
+let lastActions =[];
+
+const actionsThatNotAffectState = [CONSTANTS.EDIT_CARD];
 
 const listReducer = (state = initialState, action) => {
+  if (
+    action.type !== CONSTANTS.UNDO_LAST_ACTION &&
+    action.type !== CONSTANTS.REDO_LAST_ACTION
+  ) {
+    // lastAction = action.type;
+    lastActions.unshift(action.type)
+  }
+
   switch (action.type) {
     case CONSTANTS.ADD_LIST: {
       const { title } = action.payload;
@@ -154,7 +166,9 @@ const listReducer = (state = initialState, action) => {
       newPast.unshift([...state.present]);
 
       const list = state.present.find(list => list.id === card.list);
-      const newCards = list.cards.filter(cardID => cardID !== card.id);
+      let newCards = [...list.cards];
+
+      newCards = newCards.filter(cardID => cardID !== card.id);
 
       const newPresent = state.present.map(list => {
         if (list.id === card.list) {
@@ -173,36 +187,6 @@ const listReducer = (state = initialState, action) => {
         present: newPresent
       };
       return newState;
-    }
-    case CONSTANTS.UNDO_LAST_ACTION: {
-      if (state.past.length > 0) {
-        const newPresent = state.past.shift();
-        const newFuture = [...state.future];
-        newFuture.unshift([...state.present]);
-
-        const newState = {
-          past: [...state.past],
-          present: newPresent,
-          future: newFuture
-        };
-        return newState;
-      }
-      return state;
-    }
-
-    case CONSTANTS.REDO_LAST_ACTION: {
-      if (state.future.length > 0) {
-        const newPresent = state.future.shift();
-
-        const newState = {
-          past: [...state.past, state.present],
-          present: newPresent,
-          future: [...state.future]
-        };
-        return newState;
-      }
-
-      return state;
     }
 
     case CONSTANTS.DRAGGED: {
@@ -278,6 +262,43 @@ const listReducer = (state = initialState, action) => {
         present: newPresent
       };
       return newState;
+    }
+
+    case CONSTANTS.UNDO_LAST_ACTION: {
+      if (
+        state.past.length > 0 &&
+        !actionsThatNotAffectState.includes(lastActions.shift())
+      ) {
+        const newPresent = state.past.shift();
+        const newFuture = [...state.future];
+        newFuture.unshift([...state.present]);
+
+        const newState = {
+          past: [...state.past],
+          present: newPresent,
+          future: newFuture
+        };
+        return newState;
+      }
+      return state;
+    }
+
+    case CONSTANTS.REDO_LAST_ACTION: {
+      if (
+        state.future.length > 0 &&
+        !actionsThatNotAffectState.includes(lastActions.shift())
+      ) {
+        const newPresent = state.future.shift();
+
+        const newState = {
+          past: [...state.past, state.present],
+          present: newPresent,
+          future: [...state.future]
+        };
+        return newState;
+      }
+
+      return state;
     }
     default:
       return state;

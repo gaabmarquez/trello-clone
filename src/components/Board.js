@@ -16,7 +16,7 @@ const ListContainer = styled.div`
 `;
 
 const Board = () => {
-  const lists = useSelector(state => state.lists.present);
+  const lists = useSelector(state => state.lists);
   const cards = useSelector(state => state.cards);
 
   const dispatch = useDispatch();
@@ -48,20 +48,30 @@ const Board = () => {
       <Droppable droppableId='all-lists' direction='horizontal' type='list'>
         {provided => (
           <ListContainer ref={provided.innerRef} {...provided.droppableProps}>
-            <button style={styles.undo} onClick={undo}>
+            <button
+              style={styles.undo}
+              onClick={undo}
+              disabled={lists.past.length === 0 || cards.past.length === 0}
+            >
               {' '}
-              UNDO!!
+              UNDO LAST ACTION
             </button>
-            <button style={styles.redo} onClick={redo}>
+            <button
+              style={styles.redo}
+              onClick={redo}
+              disabled={lists.future.length === 0 || cards.future.length === 0}
+            >
               {' '}
               REDO!!
             </button>
 
-            {Object.keys(lists).map((key, index) => {
-              const list = lists[key];
+            {Object.keys(lists.present).map((key, index) => {
+              const list = lists.present[key];
               const listCards =
                 list.cards.length > 0
-                  ? list.cards.map(cardID => cards[cardID])
+                  ? list.cards
+                      .map(cardID => cards.present[cardID])
+                      .filter(card => card !== undefined)
                   : [];
               return (
                 <List
@@ -87,7 +97,7 @@ const styles = {
   undo: {
     position: 'absolute',
     top: '10px',
-    right: '20%'
+    right: '30%'
   },
   redo: {
     position: 'absolute',

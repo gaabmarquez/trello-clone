@@ -1,9 +1,29 @@
 import { CONSTANTS } from '../actions';
 import { uuid } from 'uuidv4';
 
-const initialState = {};
+const initialState = {
+  past: [],
+  present: {},
+  future: []
+};
+// let lastAction;
+let lastActions = [];
+
+const actionsThatNotAffectState = [
+  CONSTANTS.DRAGGED,
+  CONSTANTS.ADD_LIST,
+  CONSTANTS.EDIT_LIST
+];
 
 const cardReducer = (state = initialState, action) => {
+  if (
+    action.type !== CONSTANTS.UNDO_LAST_ACTION &&
+    action.type !== CONSTANTS.REDO_LAST_ACTION
+  ) {
+    // lastAction = action.type;
+    lastActions.unshift(action.type);
+  }
+
   switch (action.type) {
     case CONSTANTS.ADD_CARD: {
       const { text, listID, id } = action.payload;
@@ -13,52 +33,133 @@ const cardReducer = (state = initialState, action) => {
         id: id,
         list: listID
       };
-      // debugger;
-      return { ...state, [id]: newCard };
+
+      const newPast = [...state.past];
+      newPast.unshift({ ...state.present });
+      const newState = {
+        ...state,
+        past: newPast,
+        present: { ...state.present, [id]: newCard }
+      };
+      return newState;
     }
     case CONSTANTS.EDIT_CARD: {
       const { id, newText } = action.payload;
-      const card = state[id];
+      const card = { ...state.present[id] };
       card.text = newText;
-      return { ...state, [id]: card };
+
+      const newPast = [...state.past];
+      newPast.unshift({ ...state.present });
+      const newState = {
+        ...state,
+        past: newPast,
+        present: { ...state.present, [id]: card }
+      };
+      return newState;
     }
     case CONSTANTS.ARCHIVE_CARD: {
       const { card } = action.payload;
-      const newState = state;
-      delete newState[card.id];
 
+      const newPresent = { ...state.present };
+      delete newPresent[card.id];
+
+      const newPast = [...state.past];
+      newPast.unshift({ ...state.present });
+      const newState = {
+        ...state,
+        past: newPast,
+        present: newPresent
+      };
       return newState;
     }
     case CONSTANTS.ARCHIVE_LIST: {
       const { cards } = action.payload;
 
-      const newState = state;
-      cards.map(card => delete newState[card.id]);
+      const newPresent = { ...state.present };
+      cards.map(card => delete newPresent[card.id]);
+
+      const newPast = [...state.past];
+      newPast.unshift({ ...state.present });
+      const newState = {
+        ...state,
+        past: newPast,
+        present: newPresent
+      };
       return newState;
     }
     case CONSTANTS.DUPLICATE_CARD: {
       const { card } = action.payload;
-      return { ...state, [card.id]: card };
+
+      const newPast = [...state.past];
+      newPast.unshift({ ...state.present });
+      const newState = {
+        ...state,
+        past: newPast,
+        present: { ...state.present, [card.id]: card }
+      };
+      return newState;
     }
+
     case CONSTANTS.DUPLICATE_LIST: {
       const { cards, newId } = action.payload;
       let newCards = [];
+      const newPresent = { ...state.present };
 
       for (const card of cards) {
         const newCard = { ...card };
         newCard.id = uuid();
         newCard.list = newId;
+        newPresent[newCard.id] = newCard;
         newCards.push(newCard);
       }
 
-      const newState = { ...state };
+      action.payload.cards = newCards;
+      // return newState;
+      const newPast = [...state.past];
+      newPast.unshift({ ...state.present });
+      const newState = {
+        ...state,
+        past: newPast,
+        present: newPresent
+      };
+      return newState;
+    }
 
-      for (const card of newCards) {
-        newState[card.id] = card;
+    case CONSTANTS.UNDO_LAST_ACTION: {
+      if (
+        state.past.length > 0 &&
+        !actionsThatNotAffectState.includes(lastActions.shift())
+      ) {
+        const newPresent = state.past.shift();
+        const newFuture = [...state.future];
+        newFuture.unshift({ ...state.present });
+
+        const newState = {
+          past: [...state.past],
+          present: newPresent,
+          future: newFuture
+        };
+        return newState;
+      }
+      return state;
+    }
+
+    case CONSTANTS.REDO_LAST_ACTION: {
+      if (
+        state.future.length > 0 &&
+        !actionsThatNotAffectState.includes(lastActions.shift())
+      ) {
+        const newPresent = state.future.shift();
+
+        const newState = {
+          past: [...state.past, state.present],
+          present: newPresent,
+          future: [...state.future]
+        };
+        return newState;
       }
 
-      action.payload.cards = newCards;
-      return newState;
+      return state;
     }
 
     default:

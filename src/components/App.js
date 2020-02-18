@@ -56,7 +56,7 @@ const MainContainer = styled.div`
 `;
 
 function App() {
-  const archived = useSelector(state => state.archived);
+  const archived = useSelector(state => state.archived.present);
   const [searchText, setSearchText] = useState('');
   const dispatch = useDispatch();
 
