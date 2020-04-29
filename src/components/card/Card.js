@@ -4,11 +4,11 @@ import { Draggable } from 'react-beautiful-dnd';
 import styled from 'styled-components';
 import CardForm from './CardForm';
 
-import { editCard } from '../redux/actions';
+import { editCard } from '../../redux/actions';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
 
-import { archiveCard, duplicateCard } from '../redux/actions/cardActions';
+import { archiveCard, duplicateCard } from '../../redux/actions/cardActions';
 
 const CardContainer = styled.div`
   margin-bottom: 0.5rem !important;

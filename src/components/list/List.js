@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import Card from './Card';
-import AddCard from './AddCard';
+import Card from '../card/Card';
+import AddCard from '../card/AddCard';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
 import styled from 'styled-components';
 
@@ -9,11 +9,12 @@ import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
 
 import ListForm from './ListForm';
+
 import {
   editList,
   archiveList,
-  duplicateList
-} from '../redux/actions/listActions';
+  duplicateList,
+} from '../../redux/actions/listActions';
 
 const ListContainer = styled.div`
   background-color: #ebecf0;
@@ -73,13 +74,13 @@ const List = ({ id, title, cards = [], index }) => {
 
   const dispatch = useDispatch();
 
-  const saveChanges = e => {
+  const saveChanges = (e) => {
     e.preventDefault();
     dispatch(editList(id, listTitle));
     setIsEditing(false);
   };
 
-  const handleInputChange = ev => {
+  const handleInputChange = (ev) => {
     setTitle(ev.target.value);
   };
 
@@ -98,7 +99,7 @@ const List = ({ id, title, cards = [], index }) => {
 
   return (
     <Draggable draggableId={String(id)} index={index}>
-      {provided => (
+      {(provided) => (
         <ListContainer
           ref={provided.innerRef}
           {...provided.draggableProps}
@@ -153,7 +154,7 @@ const List = ({ id, title, cards = [], index }) => {
             </div>
           )}
           <Droppable droppableId={String(id)}>
-            {provided => (
+            {(provided) => (
               <div ref={provided.innerRef} {...provided.droppableProps}>
                 {cards.map((card, index) => (
                   <Card
@@ -181,16 +182,16 @@ const styles = {
     marginRight: '1em',
     borderRadius: '3px',
     minWidth: '272px',
-    maxWidth: '272px'
+    maxWidth: '272px',
   },
   actionContainer: {
-    position: 'relative'
+    position: 'relative',
   },
   title: {
     padding: '10px',
     fontSize: '1.2em',
     wordBreak: 'break-all',
-    width: '70%'
-  }
+    width: '70%',
+  },
 };
 export default List;

@@ -1,5 +1,5 @@
 import React from 'react';
-import AddButton from '../components/AddButton';
+import AddButton from '../ui-components/AddButton';
 import styled from 'styled-components';
 
 const FormContainer = styled.div`

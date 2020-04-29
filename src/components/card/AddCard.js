@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { addCard } from '../redux/actions';
+import { addCard } from '../../redux/actions';
 import CardForm from './CardForm';
 
 export default function AddCard({ listId }) {

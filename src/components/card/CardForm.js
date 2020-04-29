@@ -1,6 +1,6 @@
 import React from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
-import AddButton from './AddButton';
+import AddButton from '../ui-components/AddButton';
 import styled from 'styled-components';
 
 const ActionContainer = styled.div`

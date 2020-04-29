@@ -6,7 +6,7 @@ import Card from 'react-bootstrap/Card';
 const ArchivedContainer = styled.div`
   position: absolute;
   right: 0px;
-  top: 55px;
+  top: 50px;
   background-color: #ebecf0;
   margin-right: 1em;
   border-radius: 3px;

@@ -1,12 +1,12 @@
 import React from 'react';
-import List from './List';
+import List from '../list/List';
 import { useSelector } from 'react-redux';
-import AddList from './AddList';
+import AddList from '../list/AddList';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import { useDispatch } from 'react-redux';
-import { sort } from '../redux/actions/listActions';
+import { sort } from '../../redux/actions/listActions';
 import styled from 'styled-components';
-import { undoLastAction } from '../redux/actions/listActions';
+import { undoLastAction } from '../../redux/actions/listActions';
 
 const ListContainer = styled.div`
   display: flex;
