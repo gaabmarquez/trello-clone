@@ -1,8 +1,12 @@
 # Trello Clone
 
+A live version of this project can be found here
+[DEMO](https://gaabmarquez.github.io/trello-clone/)
+
 This project was made to prove React / Redux knowledge.  
 This project is a basic [trello.com](https://trello.com) clone, with minimum functionality.  
-A live version of this project can be found [here](https://gaabmarquez.github.io/trello-clone/)
+
+
 
 ## What can be done with this app?
 
